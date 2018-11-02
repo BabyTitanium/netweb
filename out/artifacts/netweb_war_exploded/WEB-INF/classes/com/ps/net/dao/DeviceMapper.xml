@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.Device">
+    <id column="device_net" jdbcType="INTEGER" property="device_net" />
+    <result column="device_type" jdbcType="TINYINT" property="device_type" />
+    <result column="device_id" jdbcType="INTEGER" property="device_id" />
+    <result column="device_code" jdbcType="VARCHAR" property="device_code" />
+    <result column="device_ip" jdbcType="VARCHAR" property="device_ip" />
+    <result column="device_port" jdbcType="INTEGER" property="device_port" />
+    <result column="period" jdbcType="INTEGER" property="period" />
+    <result column="heart_time" jdbcType="TIMESTAMP" property="heart_time" />
+    <result column="share_period" jdbcType="INTEGER" property="share_period" />
+    <result column="firmware" jdbcType="VARCHAR" property="firmware" />
+    <result column="major_version" jdbcType="INTEGER" property="major_version" />
+    <result column="minor_version" jdbcType="INTEGER" property="minor_version" />
+    <result column="revision" jdbcType="INTEGER" property="revision" />
+    <result column="period_type" jdbcType="INTEGER" property="period_type" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="reconfiguration" jdbcType="INTEGER" property="reconfiguration" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    device_net, device_type, device_id, device_code, device_ip, device_port, period, 
+    heart_time, share_period, firmware, major_version, minor_version, revision, period_type, 
+    location, reconfiguration
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where device_net = #{device_net,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from device
+    where device_net = #{device_net,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.Device">
+    insert into device (device_net, device_type, device_id, 
+      device_code, device_ip, device_port, 
+      period, heart_time, share_period, 
+      firmware, major_version, minor_version, 
+      revision, period_type, location, 
+      reconfiguration)
+    values (#{device_net,jdbcType=INTEGER}, #{device_type,jdbcType=TINYINT}, #{device_id,jdbcType=INTEGER},
+      #{device_code,jdbcType=VARCHAR}, #{device_ip,jdbcType=VARCHAR}, #{device_port,jdbcType=INTEGER}, 
+      #{period,jdbcType=INTEGER}, #{heart_time,jdbcType=TIMESTAMP}, #{share_period,jdbcType=INTEGER}, 
+      #{firmware,jdbcType=VARCHAR}, #{major_version,jdbcType=INTEGER}, #{minor_version,jdbcType=INTEGER}, 
+      #{revision,jdbcType=INTEGER}, #{period_type,jdbcType=INTEGER}, #{location,jdbcType=VARCHAR}, 
+      #{reconfiguration,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.Device">
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="device_net != null">
+        device_net,
+      </if>
+      <if test="device_type != null">
+        device_type,
+      </if>
+      <if test="device_id != null">
+        device_id,
+      </if>
+      <if test="device_code != null">
+        device_code,
+      </if>
+      <if test="device_ip != null">
+        device_ip,
+      </if>
+      <if test="device_port != null">
+        device_port,
+      </if>
+      <if test="period != null">
+        period,
+      </if>
+      <if test="heart_time != null">
+        heart_time,
+      </if>
+      <if test="share_period != null">
+        share_period,
+      </if>
+      <if test="firmware != null">
+        firmware,
+      </if>
+      <if test="major_version != null">
+        major_version,
+      </if>
+      <if test="minor_version != null">
+        minor_version,
+      </if>
+      <if test="revision != null">
+        revision,
+      </if>
+      <if test="period_type != null">
+        period_type,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="reconfiguration != null">
+        reconfiguration,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="device_net != null">
+        #{device_net,jdbcType=INTEGER},
+      </if>
+      <if test="device_type != null">
+        #{device_type,jdbcType=TINYINT},
+      </if>
+      <if test="device_id != null">
+        #{device_id,jdbcType=INTEGER},
+      </if>
+      <if test="device_code != null">
+        #{device_code,jdbcType=VARCHAR},
+      </if>
+      <if test="device_ip != null">
+        #{device_ip,jdbcType=VARCHAR},
+      </if>
+      <if test="device_port != null">
+        #{device_port,jdbcType=INTEGER},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="heart_time != null">
+        #{heart_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="share_period != null">
+        #{share_period,jdbcType=INTEGER},
+      </if>
+      <if test="firmware != null">
+        #{firmware,jdbcType=VARCHAR},
+      </if>
+      <if test="major_version != null">
+        #{major_version,jdbcType=INTEGER},
+      </if>
+      <if test="minor_version != null">
+        #{minor_version,jdbcType=INTEGER},
+      </if>
+      <if test="revision != null">
+        #{revision,jdbcType=INTEGER},
+      </if>
+      <if test="period_type != null">
+        #{period_type,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="reconfiguration != null">
+        #{reconfiguration,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.Device">
+    update device
+    <set>
+      <if test="device_type != null">
+        device_type = #{device_type,jdbcType=TINYINT},
+      </if>
+      <if test="device_id != null">
+        device_id = #{device_id,jdbcType=INTEGER},
+      </if>
+      <if test="device_code != null">
+        device_code = #{device_code,jdbcType=VARCHAR},
+      </if>
+      <if test="device_ip != null">
+        device_ip = #{device_ip,jdbcType=VARCHAR},
+      </if>
+      <if test="device_port != null">
+        device_port = #{device_port,jdbcType=INTEGER},
+      </if>
+      <if test="period != null">
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="heart_time != null">
+        heart_time = #{heart_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="share_period != null">
+        share_period = #{share_period,jdbcType=INTEGER},
+      </if>
+      <if test="firmware != null">
+        firmware = #{firmware,jdbcType=VARCHAR},
+      </if>
+      <if test="major_version != null">
+        major_version = #{major_version,jdbcType=INTEGER},
+      </if>
+      <if test="minor_version != null">
+        minor_version = #{minor_version,jdbcType=INTEGER},
+      </if>
+      <if test="revision != null">
+        revision = #{revision,jdbcType=INTEGER},
+      </if>
+      <if test="period_type != null">
+        period_type = #{period_type,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="reconfiguration != null">
+        reconfiguration = #{reconfiguration,jdbcType=INTEGER},
+      </if>
+    </set>
+    where device_net = #{device_net,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.Device">
+    update device
+    set device_type = #{device_type,jdbcType=TINYINT},
+      device_id = #{device_id,jdbcType=INTEGER},
+      device_code = #{device_code,jdbcType=VARCHAR},
+      device_ip = #{device_ip,jdbcType=VARCHAR},
+      device_port = #{device_port,jdbcType=INTEGER},
+      period = #{period,jdbcType=INTEGER},
+      heart_time = #{heart_time,jdbcType=TIMESTAMP},
+      share_period = #{share_period,jdbcType=INTEGER},
+      firmware = #{firmware,jdbcType=VARCHAR},
+      major_version = #{major_version,jdbcType=INTEGER},
+      minor_version = #{minor_version,jdbcType=INTEGER},
+      revision = #{revision,jdbcType=INTEGER},
+      period_type = #{period_type,jdbcType=INTEGER},
+      location = #{location,jdbcType=VARCHAR},
+      reconfiguration = #{reconfiguration,jdbcType=INTEGER}
+    where device_net = #{device_net,jdbcType=INTEGER}
+  </update>
+  <select id="getDeviceList" parameterType="java.util.Map" resultType="java.util.Map">
+    select * from device
+     where 1=1
+     <if test="device_net!=null">
+       and device_net like "%"#{device_net}"%"
+     </if>
+     order by device_net limit #{first},#{last}
+  </select>
+  <select id="getDeviceListCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(*) from(select * from device      where 1=1
+    <if test="device_net!=null">
+      and device_net like "%"#{device_net}"%"
+    </if> ) as g
+  </select>
+
+  <!--<select id="getDeviceListNoPage" parameterType="java.util.Map" resultType="java.util.Map">-->
+    <!--select * from device-->
+  <!--</select>-->
+  <select id="getDeviceListOnline" parameterType="java.util.Map" resultType="java.util.Map">
+    select * from device
+    where heart_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 10 MINUTE) ]]>
+   <if test="device_net!=null">
+      and device_net like "%"#{device_net}"%"
+    </if>
+     order by device_net
+    limit #{first},#{last}
+  </select>
+  <select id="getDeviceListOnlineCount"  resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(*) from (select * from device
+    where heart_time>=DATE_SUB(NOW(),INTERVAL 10 MINUTE)
+    <if test="device_net!=null">
+    and device_net like "%"#{device_net}"%"
+  </if>)as g
+  </select>
+  <select id="getDeviceListOffline" parameterType="java.util.Map" resultType="java.util.Map">
+    select * from device
+    where
+    ( heart_time <![CDATA[  < DATE_SUB(NOW(),INTERVAL 10 MINUTE)
+  OR heart_time is NULL ]]>)
+    <if test="device_net!=null">
+      and device_net like "%"#{device_net}"%"
+    </if>
+   order  by device_net   limit #{first},#{last}
+
+  </select>
+  <select id="getDeviceListOfflineCount"  resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(*) from (select * from device
+    where
+    ( heart_time<![CDATA[ < DATE_SUB(NOW(),INTERVAL 10 MINUTE)     OR heart_time is NULL )
+    ]]>)
+    <if test="device_net!=null">
+    and device_net like "%"#{device_net}"%"
+    </if>
+    as g
+  </select>
+</mapper>

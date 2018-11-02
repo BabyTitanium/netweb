@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.RoomThermostatAddrMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.RoomThermostatAddr">
+    <id column="room_id" jdbcType="INTEGER" property="room_id" />
+    <result column="node_addr" jdbcType="VARCHAR" property="node_addr" />
+    <result column="stopped" jdbcType="INTEGER" property="stopped" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="start_time" />
+    <result column="stop_time" jdbcType="TIMESTAMP" property="stop_time" />
+    <result column="thermostat_model" jdbcType="VARCHAR" property="thermostat_model" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    room_id, node_addr, stopped, start_time, stop_time, thermostat_model
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room_thermostat_addr
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from room_thermostat_addr
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.RoomThermostatAddr">
+    insert into room_thermostat_addr (room_id, node_addr, stopped, 
+      start_time, stop_time, thermostat_model
+      )
+    values (#{room_id,jdbcType=INTEGER}, #{node_addr,jdbcType=VARCHAR}, #{stopped,jdbcType=INTEGER}, 
+      #{start_time,jdbcType=TIMESTAMP}, #{stop_time,jdbcType=TIMESTAMP}, #{thermostat_model,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.RoomThermostatAddr">
+    insert into room_thermostat_addr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="node_addr != null">
+        node_addr,
+      </if>
+      <if test="stopped != null">
+        stopped,
+      </if>
+      <if test="start_time != null">
+        start_time,
+      </if>
+      <if test="stop_time != null">
+        stop_time,
+      </if>
+      <if test="thermostat_model != null">
+        thermostat_model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="node_addr != null">
+        #{node_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thermostat_model != null">
+        #{thermostat_model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.RoomThermostatAddr">
+    update room_thermostat_addr
+    <set>
+      <if test="node_addr != null">
+        node_addr = #{node_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        stopped = #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        start_time = #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thermostat_model != null">
+        thermostat_model = #{thermostat_model,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.RoomThermostatAddr">
+    update room_thermostat_addr
+    set node_addr = #{node_addr,jdbcType=VARCHAR},
+      stopped = #{stopped,jdbcType=INTEGER},
+      start_time = #{start_time,jdbcType=TIMESTAMP},
+      stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      thermostat_model = #{thermostat_model,jdbcType=VARCHAR}
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="updateRoomThermostat" parameterType="java.util.Map">
+  update room_thermostat_addr
+    set node_addr = #{node_addr,jdbcType=VARCHAR},
+      stopped = #{stopped,jdbcType=INTEGER},
+      start_time = #{start_time,jdbcType=TIMESTAMP},
+      stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      thermostat_model = #{thermostat_model,jdbcType=VARCHAR}
+    where room_id = #{room_id,jdbcType=INTEGER}
+
+  </update>
+  <insert id="addRoomThermostat" parameterType="java.util.Map">
+    insert into room_thermostat_addr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="node_addr != null">
+        node_addr,
+      </if>
+      <if test="stopped != null">
+        stopped,
+      </if>
+      <if test="start_time != null">
+        start_time,
+      </if>
+      <if test="stop_time != null">
+        stop_time,
+      </if>
+      <if test="thermostat_model != null">
+        thermostat_model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="node_addr != null">
+        #{node_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thermostat_model != null">
+        #{thermostat_model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="getRoomThermostatAddr" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select * from room_thermostat_addr where room_id=#{room_id}
+  </select>
+
+
+  <select id="getRoomThermostatList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.room_temp,"-") as room_temp,   IFNULL(mdl.set_temp,"-") as set_temp,g.* from thermostat_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.node_addr,"-")as  node_addr , IFNULL(ema.thermostat_model,"-")as thermostat_model
+    from node_list_view nd
+    left join  room_thermostat_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.node_addr=mdl.node_addr
+    <if test=" onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>
+    <if test="first!=null and last!=null">
+      limit #{first},#{last}
+    </if>
+  </select>
+  <select id="getRoomThermostatListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(
+    SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.room_temp,"-") as room_temp,   IFNULL(mdl.set_temp,"-") as set_temp,g.* from thermostat_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.node_addr,"-")as  node_addr , IFNULL(ema.thermostat_model,"-")as thermostat_model
+    from node_list_view nd
+    left join  room_thermostat_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.node_addr=mdl.node_addr
+    <if test="onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR ) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>) as m
+  </select>
+  <select id="getAllRoomThermostat" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.room_temp,"-") as room_temp,   IFNULL(mdl.set_temp,"-") as set_temp,g.* from thermostat_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.node_addr,"-")as  node_addr , IFNULL(ema.thermostat_model,"-")as thermostat_model
+    from node_list_view nd
+    left join  room_thermostat_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.node_addr=mdl.node_addr
+    <if test="onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL   24 HOUR) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>
+  </select>
+
+
+  <select id="getThermostatListOnlineCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(
+        SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.room_temp,"-") as room_temp,   IFNULL(mdl.set_temp,"-") as set_temp,g.* from thermostat_data_last mdl
+    RIGHT JOIN  (
+     select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.node_addr,"-")as  node_addr , IFNULL(ema.thermostat_model,"-")as thermostat_model
+    from node_list_view nd
+    left join  room_thermostat_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.node_addr=mdl.node_addr
+      where mdl.data_time  <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR) ]]>
+  ) as m
+  </select>
+
+  <select id="getThermostatListOfflineCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(
+        SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.room_temp,"-") as room_temp,   IFNULL(mdl.set_temp,"-") as set_temp,g.* from thermostat_data_last mdl
+    RIGHT JOIN  (
+     select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.node_addr,"-")as  node_addr , IFNULL(ema.thermostat_model,"-")as thermostat_model
+    from node_list_view nd
+    left join  room_thermostat_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.node_addr=mdl.node_addr
+       where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+  ) as m
+  </select>
+</mapper>

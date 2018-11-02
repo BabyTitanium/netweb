@@ -1,0 +1,306 @@
+package com.ps.net.controller;
+
+import com.ps.net.changeObject.ExtraBean;
+import com.ps.net.changeObject.ExtraMethod;
+import com.ps.net.dao.BranchHeatInfoMapper;
+import com.ps.net.dao.BuildHeatInfoMapper;
+import com.ps.net.dao.RoomsMapper;
+import com.ps.net.dao.UnitsMapper;
+import com.ps.net.model.BranchHeatInfo;
+import com.ps.net.model.Branchs;
+import com.ps.net.service.ZoneBranchService;
+import com.ps.net.service.ZoneBuildingService;
+import com.ps.net.service.ZoneRoomService;
+import javafx.scene.chart.ValueAxis;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.xml.soap.SAAJMetaFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+@Controller
+@RequestMapping("sysIndex")
+public class zoneBranchController {
+    @Autowired
+    private ZoneBranchService zoneBranchService;
+    @Resource
+    BranchHeatInfoMapper branchHeatInfoMapper;
+    @Autowired
+    private ZoneBuildingService zoneBuildingService;
+    @Autowired
+    private ZoneRoomService zoneRoomService;
+    @Autowired
+    private UnitsMapper unitsMapper;
+    @Autowired
+    private RoomsMapper roomsMapper;
+    @RequestMapping(value = "getBranchList")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody
+    Map<String,Object> getBranchList(@RequestParam Map<String,Object> map){
+        try {
+            Map<String,Object> result=new HashMap<>();
+            List<Map<String,Object>> list=zoneBranchService.getBranchList(map);
+            for(int i=0;i<list.size();i++){
+
+                Map<String,Object> branch=list.get(i);
+                if( branch.get("cal_mode")!=null) {
+                    Integer cal_mode = Integer.parseInt(String.valueOf(branch.get("cal_mode")));
+                    if (cal_mode == 0) {
+                        branch.put("cal_mode", "分户累加");
+                    } else if (cal_mode == 1) {
+                        branch.put("cal_mode", "分支计算");
+                    }else if(cal_mode == 2){
+                        branch.put("cal_mode", "自身表计");
+                    }
+                }
+                Integer id=Integer.parseInt(String.valueOf(branch.get("id")));
+                Map<String,Object> branchHeatInfo=branchHeatInfoMapper.getBranchHeatInfo(id);
+                if(branchHeatInfo!=null){
+                    for(String s:branchHeatInfo.keySet()){
+                        branch.put(s,branchHeatInfo.get(s));
+                    }
+                }else {
+                    branch.put("total_count","-");
+                    branch.put("total_room_area","-");
+                    branch.put("total_heat_area","-");
+                    branch.put("heat_count","-");
+                    branch.put("total_count","-");
+                    branch.put("real_heat_area","-");
+                }
+            }
+            Integer count=zoneBranchService.getBranchListCount(map);
+            return  ExtraMethod.returnList(list,count);
+        }catch (Exception e){
+            return  null;
+        }
+    }
+    @RequestMapping(value = "addBranchInfo")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> addBranchInfo(@RequestParam Map<String,Object> map){
+        try{
+            Map<String,Object> result=new HashMap();
+            map=ExtraMethod.setNull(map);
+            zoneBranchService.addBranch(map);
+            result.put("state","success");
+            return result;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "getBranchInfo")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Branchs getBranchInfo(Integer id){
+        try{
+            Branchs branchs=zoneBranchService.getBranch(id);
+            return  branchs;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "changeBranchInfo")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object>     changeBranchInfo(@RequestParam Map<String,Object> branch){
+        try{
+            Map<String,Object> map=new HashMap<>();
+            zoneBranchService.changeBranchInfo(branch);
+            map.put("state","success");
+            return  map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "deleteBranchInfo")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> deleteBranchInfo(Integer id){
+        try {
+            Map<String,Object> map=new HashMap<>();
+            zoneBranchService.deleteBranchInfo(id);
+            map.put("state","success");
+            return map;
+        }catch (Exception e){
+            return  null;
+        }
+    }
+    @RequestMapping(value = "roomTree")
+    @RequiresPermissions("sysIndex")
+    public String roomTree(Integer zone_id,Integer branch_id,ModelMap map){
+           map.addAttribute("zone_id",zone_id);
+           map.addAttribute("branch_id",branch_id);
+            return "roomTree";
+    }
+
+    @RequestMapping(value = "getRoomTree")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody List<Map<String,Object>> getRoomTree(Integer zone_id,Integer branch_id){
+        Map<String,Object> condition1=new HashMap<>();
+        List<Map<String,Object>> list=new ArrayList<>();
+        condition1.put("zone_id",zone_id);
+        try {
+            //根据zone_id得到楼栋列表
+            List<Map<String,Object>> buildingList=zoneBuildingService.getBuildingList(condition1);
+            if(buildingList!=null){
+                for(int i=0;i<buildingList.size();i++){
+                    Map<String,Object> build=buildingList.get(i);
+                    Integer build_id=Integer.parseInt(String.valueOf(build.get("id")));
+                    build.put("pId",0);
+                    build.put("zId",(i+1)*100);
+                    build.put("name",build.get("build_name"));
+
+                    //根据楼栋id单元
+                    List<Map<String,Object>> unitsList=unitsMapper.getUnitsListByBuilding(build_id);
+                    if(unitsList!=null){
+                        build.put("open","true");
+                        list.add(build);
+                        for(int j=0;j<unitsList.size();j++){
+                            Map<String,Object> unit=unitsList.get(j);
+                            Integer unit_id=Integer.parseInt(String.valueOf(unit.get("id")));
+                            unit.put("pId",(i+1)*100);
+                            unit.put("zId",(i+1)*10+j+1);
+                            unit.put("name",unit.get("unit_name"));
+                            //根据单元ID查找房间
+                            List<Map<String,Object>> roomList=roomsMapper.roomsList(unit_id);
+                            if(roomList!=null){
+                                unit.put("open","true");
+                                list.add(unit);
+                                for(int k=0;k<roomList.size();k++){
+                                    Map<String,Object> room=roomList.get(k);
+                                    room.put("pId",(i+1)*10+j+1);
+                                    room.put("zId",(i+1)*100+(j+1)*10+k+1);
+                                    room.put("name",build.get("build_num")+"-"+unit.get("unit_num")+"-"+room.get("room_num"));
+                                    Integer room_id=Integer.parseInt(String.valueOf(room.get("id")));
+                                    Map<String,Object> conditions=new HashMap<>();
+                                    conditions.put("room_id",room_id);
+                                    conditions.put("branch_id",branch_id);
+                                    List<Map<String,Object>> rlist=zoneBranchService.getBranchRoom(conditions);
+                                    if(rlist.size()>0){
+                                        room.put("checked","true");
+                                        unit.put("checked","true");
+                                        build.put("checked","true");
+                                    }
+                                    list.add(room);
+                                }
+                            }else {
+                                unit.put("open","false");
+                                list.add(unit);
+                            }
+                        }
+                    }else{
+                        build.put("open","false");
+                        list.add(build);
+                    }
+                }
+            }
+            return list;
+        }catch (Exception e){
+            return  null;
+        }
+    }
+   @RequestMapping(value = "branchNameCheck")
+   @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object>branchNameCheck(@RequestParam Map<String,Object> map){
+        try {
+            Map<String,Object> result=new HashMap<>();
+            map=ExtraMethod.setNull(map);
+            Map<String,Object> branch=zoneBranchService.checkBranch(map);
+            if(branch==null){
+                result.put("state","success");
+            }else {
+                result.put("state","error");
+            }
+            return  result;
+        }catch (Exception e){
+            return  null;
+        }
+    }
+    @RequestMapping(value = "addRoomToBranch")
+    @RequiresPermissions("sysIndex")
+    public  @ResponseBody Map<String,Object> addRoomToBranch(@RequestParam(value = "branch_id") Integer branch_id,@RequestParam(value = "list[]") Integer[] list){
+      try{
+          Map<String,Object> result=new HashMap<>();
+          Map<String,Object> map=new HashMap<>();
+          map.put("branch_id",branch_id);
+          //先删除当前分支所有房间
+          zoneBranchService.batchDeleteBranchRoom(branch_id);
+          for(int i=0;i<list.length;i++){
+              map.put("room_id",list[i]);
+              List<Map<String,Object>> rooms=zoneBranchService.getBranchRoom(map);
+              if(rooms.size()>0){
+                  continue;
+              }else{
+                  zoneBranchService.addBranchRoom(map);
+              }
+          }
+          result.put("state","success");
+          return result;
+      }  catch (Exception e){
+          return null;
+      }
+
+    }
+
+    @RequestMapping(value = "statisticBranch")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> statisticBranch(Integer branch_id){
+        try {
+            BranchHeatInfo branchHeatInfo=branchHeatInfoMapper.selectByPrimaryKey(branch_id);
+            if(branchHeatInfo==null){
+                zoneBranchService.addBranchHeatInfo(branch_id);
+            }else{
+                zoneBranchService.updateBranchHeatInfo(branch_id);
+            }
+            Map<String,Object> result=new HashMap<>();
+            result.put("state","success");
+            return result;
+        }catch (Exception e){
+            return  null;
+        }
+    }
+
+    @RequestMapping(value = "getBranchNoSet")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody List getBranchNoSet(@RequestParam Map<String,Object> map){
+        return zoneBranchService.getBuildBranchNoSet(map);
+    }
+
+    @RequestMapping(value = "statisticAllBranch")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map statisticAllBranch(Integer zone_id){
+        try{
+            Map<String,String> map=new HashMap<>();
+            Map<String,Object> condition=new HashMap<>();
+            condition.put("zone_id",zone_id);
+            List<Map<String,Object>> list=zoneBranchService.getBranchList(condition);
+            if(list!=null){
+                for(int i=0;i<list.size();i++){
+                    Map<String,Object> branch=list.get(i);
+                    Integer branch_id=Integer.parseInt(String.valueOf(branch.get("id")));
+                    BranchHeatInfo branchHeatInfo=branchHeatInfoMapper.selectByPrimaryKey(branch_id);
+                    if(branchHeatInfo==null){
+                        zoneBranchService.addBranchHeatInfo(branch_id);
+                    }else{
+                        zoneBranchService.updateBranchHeatInfo(branch_id);
+                    }
+                }
+            }
+            map.put("state","success");
+            return map;
+
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping("branchInfoPage")
+    @RequiresPermissions("sysIndex")
+    public String index(Integer id, ModelMap map){
+        map.addAttribute("id",id);
+        return "zoneBranch";
+    }
+}

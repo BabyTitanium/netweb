@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.BranchRoomMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.BranchRoom">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="branch_id" jdbcType="INTEGER" property="branch_id" />
+    <result column="room_id" jdbcType="INTEGER" property="room_id" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, branch_id, room_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from branch_room
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from branch_room
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.BranchRoom">
+    insert into branch_room (id, branch_id, room_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{branch_id,jdbcType=INTEGER}, #{room_id,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.BranchRoom">
+    insert into branch_room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="branch_id != null">
+        branch_id,
+      </if>
+      <if test="room_id != null">
+        room_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="branch_id != null">
+        #{branch_id,jdbcType=INTEGER},
+      </if>
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.BranchRoom">
+    update branch_room
+    <set>
+      <if test="branch_id != null">
+        branch_id = #{branch_id,jdbcType=INTEGER},
+      </if>
+      <if test="room_id != null">
+        room_id = #{room_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.BranchRoom">
+    update branch_room
+    set branch_id = #{branch_id,jdbcType=INTEGER},
+      room_id = #{room_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getBranchRoom" parameterType="java.util.Map" resultType="java.util.Map">
+    select * from branch_room
+    where 1=1
+    <if test="branch_id!=null">
+     and  branch_id=#{branch_id}
+    </if>
+    <if test="room_id!=null">
+      and room_id=#{room_id}
+    </if>
+    order by id
+  </select>
+  <insert id="addBranchRoom" parameterType="java.util.Map">
+    insert into branch_room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="branch_id != null">
+        branch_id,
+      </if>
+      <if test="room_id != null">
+        room_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="branch_id != null">
+        #{branch_id,jdbcType=INTEGER},
+      </if>
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <delete id="batchDeleteBranchRoom" parameterType="java.lang.Integer">
+    delete from branch_room where branch_id=#{branch_id}
+  </delete>
+  <select id="getBranchRoomCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from
+    (
+    select * from branch_room
+    where 1=1
+    <if test="branch_id!=null">
+      and  branch_id=#{branch_id}
+    </if>
+    <if test="room_id!=null">
+      and room_id=#{room_id}
+    </if>
+    ) as g
+  </select>
+</mapper>

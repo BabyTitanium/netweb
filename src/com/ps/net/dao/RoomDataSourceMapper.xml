@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.RoomDataSourceMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.RoomDataSource">
+    <id column="zone_id" jdbcType="INTEGER" property="zone_id" />
+    <result column="flow" jdbcType="INTEGER" property="flow" />
+    <result column="in_temp" jdbcType="INTEGER" property="in_temp" />
+    <result column="out_temp" jdbcType="INTEGER" property="out_temp" />
+    <result column="room_temp" jdbcType="INTEGER" property="room_temp" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    zone_id, flow, in_temp, out_temp, room_temp, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room_data_source
+    where zone_id = #{zone_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from room_data_source
+    where zone_id = #{zone_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.RoomDataSource">
+    insert into room_data_source (zone_id, flow, in_temp, 
+      out_temp, room_temp, update_time
+      )
+    values (#{zone_id,jdbcType=INTEGER}, #{flow,jdbcType=INTEGER}, #{in_temp,jdbcType=INTEGER}, 
+      #{out_temp,jdbcType=INTEGER}, #{room_temp,jdbcType=INTEGER}, #{update_time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.RoomDataSource">
+    insert into room_data_source
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="zone_id != null">
+        zone_id,
+      </if>
+      <if test="flow != null">
+        flow,
+      </if>
+      <if test="in_temp != null">
+        in_temp,
+      </if>
+      <if test="out_temp != null">
+        out_temp,
+      </if>
+      <if test="room_temp != null">
+        room_temp,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="zone_id != null">
+        #{zone_id,jdbcType=INTEGER},
+      </if>
+      <if test="flow != null">
+        #{flow,jdbcType=INTEGER},
+      </if>
+      <if test="in_temp != null">
+        #{in_temp,jdbcType=INTEGER},
+      </if>
+      <if test="out_temp != null">
+        #{out_temp,jdbcType=INTEGER},
+      </if>
+      <if test="room_temp != null">
+        #{room_temp,jdbcType=INTEGER},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.RoomDataSource">
+    update room_data_source
+    <set>
+      <if test="flow != null">
+        flow = #{flow,jdbcType=INTEGER},
+      </if>
+      <if test="in_temp != null">
+        in_temp = #{in_temp,jdbcType=INTEGER},
+      </if>
+      <if test="out_temp != null">
+        out_temp = #{out_temp,jdbcType=INTEGER},
+      </if>
+      <if test="room_temp != null">
+        room_temp = #{room_temp,jdbcType=INTEGER},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where zone_id = #{zone_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.RoomDataSource">
+    update room_data_source
+    set flow = #{flow,jdbcType=INTEGER},
+      in_temp = #{in_temp,jdbcType=INTEGER},
+      out_temp = #{out_temp,jdbcType=INTEGER},
+      room_temp = #{room_temp,jdbcType=INTEGER},
+      update_time = #{update_time,jdbcType=TIMESTAMP}
+    where zone_id = #{zone_id,jdbcType=INTEGER}
+  </update>
+</mapper>

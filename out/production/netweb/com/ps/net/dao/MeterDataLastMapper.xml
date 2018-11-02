@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.MeterDataLastMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.MeterDataLast">
+    <id column="meter_addr" jdbcType="CHAR" property="meter_addr" />
+    <result column="data_time" jdbcType="TIMESTAMP" property="data_time" />
+    <result column="cu_heat" jdbcType="DOUBLE" property="cu_heat" />
+    <result column="cu_cool" jdbcType="DOUBLE" property="cu_cool" />
+    <result column="heat_power" jdbcType="DOUBLE" property="heat_power" />
+    <result column="cu_flow" jdbcType="DOUBLE" property="cu_flow" />
+    <result column="flow_rate" jdbcType="DOUBLE" property="flow_rate" />
+    <result column="in_temp" jdbcType="DOUBLE" property="in_temp" />
+    <result column="out_temp" jdbcType="DOUBLE" property="out_temp" />
+    <result column="diff_temp" jdbcType="DOUBLE" property="diff_temp" />
+    <result column="battery_status" jdbcType="INTEGER" property="battery_status" />
+    <result column="hours" jdbcType="INTEGER" property="hours" />
+    <result column="err_list" jdbcType="VARCHAR" property="err_list" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    meter_addr, data_time, cu_heat, cu_cool, heat_power, cu_flow, flow_rate, in_temp, 
+    out_temp, diff_temp, battery_status, hours, err_list
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from meter_data_last
+    where meter_addr = #{meter_addr,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from meter_data_last
+    where meter_addr = #{meter_addr,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.MeterDataLast">
+    insert into meter_data_last (meter_addr, data_time, cu_heat, 
+      cu_cool, heat_power, cu_flow, 
+      flow_rate, in_temp, out_temp, 
+      diff_temp, battery_status, hours, 
+      err_list)
+    values (#{meter_addr,jdbcType=CHAR}, #{data_time,jdbcType=TIMESTAMP}, #{cu_heat,jdbcType=DOUBLE}, 
+      #{cu_cool,jdbcType=DOUBLE}, #{heat_power,jdbcType=DOUBLE}, #{cu_flow,jdbcType=DOUBLE}, 
+      #{flow_rate,jdbcType=DOUBLE}, #{in_temp,jdbcType=DOUBLE}, #{out_temp,jdbcType=DOUBLE}, 
+      #{diff_temp,jdbcType=DOUBLE}, #{battery_status,jdbcType=INTEGER}, #{hours,jdbcType=INTEGER}, 
+      #{err_list,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.MeterDataLast">
+    insert into meter_data_last
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="meter_addr != null">
+        meter_addr,
+      </if>
+      <if test="data_time != null">
+        data_time,
+      </if>
+      <if test="cu_heat != null">
+        cu_heat,
+      </if>
+      <if test="cu_cool != null">
+        cu_cool,
+      </if>
+      <if test="heat_power != null">
+        heat_power,
+      </if>
+      <if test="cu_flow != null">
+        cu_flow,
+      </if>
+      <if test="flow_rate != null">
+        flow_rate,
+      </if>
+      <if test="in_temp != null">
+        in_temp,
+      </if>
+      <if test="out_temp != null">
+        out_temp,
+      </if>
+      <if test="diff_temp != null">
+        diff_temp,
+      </if>
+      <if test="battery_status != null">
+        battery_status,
+      </if>
+      <if test="hours != null">
+        hours,
+      </if>
+      <if test="err_list != null">
+        err_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="meter_addr != null">
+        #{meter_addr,jdbcType=CHAR},
+      </if>
+      <if test="data_time != null">
+        #{data_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cu_heat != null">
+        #{cu_heat,jdbcType=DOUBLE},
+      </if>
+      <if test="cu_cool != null">
+        #{cu_cool,jdbcType=DOUBLE},
+      </if>
+      <if test="heat_power != null">
+        #{heat_power,jdbcType=DOUBLE},
+      </if>
+      <if test="cu_flow != null">
+        #{cu_flow,jdbcType=DOUBLE},
+      </if>
+      <if test="flow_rate != null">
+        #{flow_rate,jdbcType=DOUBLE},
+      </if>
+      <if test="in_temp != null">
+        #{in_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="out_temp != null">
+        #{out_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="diff_temp != null">
+        #{diff_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="battery_status != null">
+        #{battery_status,jdbcType=INTEGER},
+      </if>
+      <if test="hours != null">
+        #{hours,jdbcType=INTEGER},
+      </if>
+      <if test="err_list != null">
+        #{err_list,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.MeterDataLast">
+    update meter_data_last
+    <set>
+      <if test="data_time != null">
+        data_time = #{data_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cu_heat != null">
+        cu_heat = #{cu_heat,jdbcType=DOUBLE},
+      </if>
+      <if test="cu_cool != null">
+        cu_cool = #{cu_cool,jdbcType=DOUBLE},
+      </if>
+      <if test="heat_power != null">
+        heat_power = #{heat_power,jdbcType=DOUBLE},
+      </if>
+      <if test="cu_flow != null">
+        cu_flow = #{cu_flow,jdbcType=DOUBLE},
+      </if>
+      <if test="flow_rate != null">
+        flow_rate = #{flow_rate,jdbcType=DOUBLE},
+      </if>
+      <if test="in_temp != null">
+        in_temp = #{in_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="out_temp != null">
+        out_temp = #{out_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="diff_temp != null">
+        diff_temp = #{diff_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="battery_status != null">
+        battery_status = #{battery_status,jdbcType=INTEGER},
+      </if>
+      <if test="hours != null">
+        hours = #{hours,jdbcType=INTEGER},
+      </if>
+      <if test="err_list != null">
+        err_list = #{err_list,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where meter_addr = #{meter_addr,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.MeterDataLast">
+    update meter_data_last
+    set data_time = #{data_time,jdbcType=TIMESTAMP},
+      cu_heat = #{cu_heat,jdbcType=DOUBLE},
+      cu_cool = #{cu_cool,jdbcType=DOUBLE},
+      heat_power = #{heat_power,jdbcType=DOUBLE},
+      cu_flow = #{cu_flow,jdbcType=DOUBLE},
+      flow_rate = #{flow_rate,jdbcType=DOUBLE},
+      in_temp = #{in_temp,jdbcType=DOUBLE},
+      out_temp = #{out_temp,jdbcType=DOUBLE},
+      diff_temp = #{diff_temp,jdbcType=DOUBLE},
+      battery_status = #{battery_status,jdbcType=INTEGER},
+      hours = #{hours,jdbcType=INTEGER},
+      err_list = #{err_list,jdbcType=VARCHAR}
+    where meter_addr = #{meter_addr,jdbcType=CHAR}
+  </update>
+</mapper>

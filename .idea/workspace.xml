@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="netweb:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="31f3743f-5a60-453d-90b4-471101bf247f" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/netweb$tomcat.ic" NAME="tomcat Coverage Results" MODIFIED="1537340315647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="zoneBranchController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/zoneBranchController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="25">
+              <caret line="211" column="67" selection-start-line="211" selection-start-column="56" selection-end-line="211" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZoneBranchServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneBranchServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="982">
+              <caret line="66" column="43" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="applicationContext.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/config/applicationContext.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="169">
+              <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="header.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/header.jsp">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="nopermission.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/nopermission.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zoneParameter.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/zoneParameter.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="35" column="25" lean-forward="true" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+              <folding>
+                <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spring-mvc.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/config/spring-mvc.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-403" />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyShiroReaml.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ps/net/shiro/MyShiroReaml.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BranchsMapper.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ps/net/dao/BranchsMapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="282">
+              <caret line="127" column="38" lean-forward="true" selection-start-line="127" selection-start-column="38" selection-end-line="127" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zoneBranch.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/zoneBranch.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="9200">
+              <caret line="368" column="42" selection-start-line="368" selection-start-column="27" selection-end-line="368" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jsp File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>checkBuilding</find>
+      <find>customTypeList</find>
+      <find>heatSeason</find>
+      <find>checkUnit</find>
+      <find>checkRoom</find>
+      <find>url</find>
+      <find>batchEdit</find>
+      <find>checkBuliding</find>
+      <find>roomsList</find>
+      <find>//参数</find>
+      <find>location</find>
+      <find>.location</find>
+      <find>//楼</find>
+      <find>download</find>
+      <find>var index</find>
+      <find>//房间</find>
+      <find>index</find>
+      <find>//阀门</find>
+      <find>valveModelList</find>
+      <find>deleteRole</find>
+      <find>areaPermission</find>
+      <find>&lt;base href=&quot;&lt;%=basePath%&gt;&quot;&gt;</find>
+      <find>.do</find>
+      <find>/layui</find>
+      <find>/layui/</find>
+      <find>cacheManager</find>
+      <find>getBranchCompanyList</find>
+      <find>selectBranchCompanyList</find>
+      <find>getNode</find>
+      <find>branchNameCheck</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneAlarmServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneBranchServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneBuildingServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneDeviceServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneRoomMeterServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneRoomTempServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneRoomThermoServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneRoomValveServiceImpl.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/header.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/basicInfo.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/chargeType.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/customType.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/device.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/heatSeason.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/heatType.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/login.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/nopermission.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/permissionTree.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/role.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/roomLocation.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/roomTree.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/user.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneAlarm.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneBuilding.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneMeter.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneRoom.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneRoomsManage.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneTemp.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneThermostat.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneValve.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/valveModel.jsp" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/shiro/ByteSourceUtils.java" />
+        <option value="D:/Program Files/feiq/Recv Files/main.js" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/model/Functions.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/config/applicationContext.xml" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/controller/AreaChooseController.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/AreaChooseService.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/service/impl/AreaChooseServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/dao/BranchCompanyMapper.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/dao/BranchCompanyMapper.xml" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/areaPermissionTree.jsp" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/controller/UserController.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/controller/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/shiro/MyShiroReaml.java" />
+        <option value="$PROJECT_DIR$/src/config/ehcache.xml" />
+        <option value="$PROJECT_DIR$/src/config/jdbc.properties" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/controller/ZoneValveController.java" />
+        <option value="$PROJECT_DIR$/src/com/ps/net/controller/zoneBranchController.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneBranch.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/pages/zoneParameter.jsp" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-167" />
+    <option name="y" value="1" />
+    <option name="width" value="1919" />
+    <option name="height" value="1047" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="netweb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="netweb" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="getBranchCompanyList&#9;PSI&#9;JAVA://com.ps.net.service.AreaChooseService#getBranchCompanyList" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.3229885" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\1liulingling\WorkFiles\final_netweb\netweb\web\WEB-INF\lib" />
+      <recent name="E:\1liulingling\test_netweb\netweb\web\WEB-INF\lib" />
+      <recent name="E:\1liulingling\test_netweb\netweb\web\WEB-INF" />
+      <recent name="E:\WorkFiles\final_netweb\netweb\web" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+    <configuration name="tomcat" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.34" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="netweb:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_netweb_11" />
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="58742" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method>
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="netweb:war exploded" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="31f3743f-5a60-453d-90b4-471101bf247f" name="Default" comment="" />
+      <created>1536812613551</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1536812613551</updated>
+      <workItem from="1536812614728" duration="1487000" />
+      <workItem from="1536833222651" duration="415000" />
+      <workItem from="1536889208479" duration="13838000" />
+      <workItem from="1537144354215" duration="1782000" />
+      <workItem from="1537148740189" duration="70065000" />
+      <workItem from="1537838798708" duration="239000" />
+      <workItem from="1538100376235" duration="15924000" />
+      <workItem from="1538181719886" duration="876000" />
+      <workItem from="1538183233879" duration="1841000" />
+      <workItem from="1538188286973" duration="5137000" />
+      <workItem from="1538205960519" duration="6479000" />
+      <workItem from="1538212649693" duration="4024000" />
+      <workItem from="1538267956244" duration="22367000" />
+      <workItem from="1538613217409" duration="16897000" />
+      <workItem from="1538639230740" duration="2225000" />
+      <workItem from="1538721595058" duration="629000" />
+      <workItem from="1538821380090" duration="312000" />
+      <workItem from="1538967001155" duration="4007000" />
+      <workItem from="1538978787187" duration="13708000" />
+      <workItem from="1539045146352" duration="21701000" />
+      <workItem from="1539131587998" duration="17547000" />
+      <workItem from="1539160441256" duration="336000" />
+      <workItem from="1539250508309" duration="786000" />
+      <workItem from="1539658710067" duration="3783000" />
+      <workItem from="1539681389682" duration="5013000" />
+      <workItem from="1539737112662" duration="887000" />
+      <workItem from="1539743716377" duration="714000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="233019000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1874" height="1096" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.2028666" side_tool="true" weight="0.05642633" />
+      <window_info anchor="bottom" id="Application Servers" order="7" weight="0.32897604" />
+      <window_info anchor="right" id="Maven Projects" order="9" />
+      <window_info anchor="bottom" id="Database Changes" order="10" weight="0.32897604" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7971334" weight="0.19331244" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49779493" weight="0.32810867" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info id="Image Layers" order="3" />
+      <window_info anchor="bottom" id="Java Enterprise" order="14" weight="0.32810867" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.32897604" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.32897604" />
+      <window_info anchor="bottom" id="Spring" order="8" sideWeight="0.49944875" weight="0.32810867" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32897604" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4992658" visible="true" weight="0.18853363" />
+      <window_info id="Web" order="6" sideWeight="0.5007342" side_tool="true" weight="0.2183021" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49944875" weight="0.3291536" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="65" />
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+        <watch expression="list.get(31)" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/user.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="339" column="32" selection-start-line="339" selection-start-column="32" selection-end-line="339" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/shiro/ByteSourceUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/feiq/Recv Files/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="46" column="33" lean-forward="true" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/model/Functions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="4" column="46" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/web/WEB-INF/lib/spring-context-4.0.5.RELEASE.jar!/org/springframework/cache/CacheManager.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="49" column="97" selection-start-line="49" selection-start-column="97" selection-end-line="49" selection-end-column="97" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ZoneBuildingController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5540">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ZoneMeterController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5540">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ZoneRoomController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-14090">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ZoneTempController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5315">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ZoneThermostatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-490">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ChargeTypeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/HeatTypeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="31" column="54" lean-forward="true" selection-start-line="31" selection-start-column="54" selection-end-line="31" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ZoneAlarmController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ValveModelController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="30" column="24" lean-forward="true" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/RoomLocationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/RoleController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="36" column="35" lean-forward="true" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ParameterSettingController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="36" column="5" lean-forward="true" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/DeviceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/HeatSeasonController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="91" column="12" lean-forward="true" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/CustomTypeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/dao/UserBranchMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1145" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/dao/UserBranchMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/basicInfo.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5734" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/service/impl/AreaChooseServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="66" selection-start-line="25" selection-start-column="66" selection-end-line="25" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/dao/BranchCompanyMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="7" column="63" selection-start-line="7" selection-start-column="63" selection-end-line="7" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/service/impl/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-325">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/model/UserBranch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/AreaChooseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-329">
+          <caret line="65" column="41" lean-forward="true" selection-start-line="65" selection-start-column="41" selection-end-line="65" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="50" column="63" lean-forward="true" selection-start-line="50" selection-start-column="63" selection-end-line="50" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/areaPermissionTree.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="208" lean-forward="true" selection-start-line="208" selection-end-line="208" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/service/AreaChooseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="12" column="61" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/login.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-825" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="90" column="53" lean-forward="true" selection-start-line="90" selection-start-column="53" selection-end-line="90" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/dao/BranchCompanyMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="55" lean-forward="true" selection-start-line="4" selection-start-column="55" selection-end-line="4" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_102/src.zip!/java/util/HashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="1361" selection-start-line="1361" selection-end-line="1361" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_102/src.zip!/java/io/ObjectOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="347" selection-start-line="347" selection-end-line="347" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/ZoneValveController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="38" column="36" lean-forward="true" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/jdbc.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/ehcache.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/roomTree.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2375">
+          <caret line="95" selection-start-line="95" selection-end-line="102" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/zoneBranch.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9200">
+          <caret line="368" column="42" selection-start-line="368" selection-start-column="27" selection-end-line="368" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/dao/BranchsMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="127" column="38" lean-forward="true" selection-start-line="127" selection-start-column="38" selection-end-line="127" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/controller/zoneBranchController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="211" column="67" selection-start-line="211" selection-start-column="56" selection-end-line="211" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/service/impl/ZoneBranchServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="982">
+          <caret line="66" column="43" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/spring-mvc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-403" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ps/net/shiro/MyShiroReaml.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/applicationContext.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/header.jsp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/nopermission.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/pages/zoneParameter.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="35" column="25" lean-forward="true" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>netweb:war exploded</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3229885" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3229885" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>netweb</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3229885" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3229885" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

@@ -1,0 +1,144 @@
+package com.ps.net.service.impl;
+
+import com.ps.net.changeObject.Page;
+import com.ps.net.dao.BuildHeatInfoMapper;
+import com.ps.net.dao.BuildsMapper;
+import com.ps.net.dao.RoomsMapper;
+import com.ps.net.dao.UnitsMapper;
+import com.ps.net.model.BuildHeatInfo;
+import com.ps.net.model.Builds;
+import com.ps.net.service.ZoneBuildingService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class ZoneBuildingServiceImpl implements ZoneBuildingService {
+    @Resource
+    private BuildsMapper buildsMapper;
+    @Resource
+    private RoomsMapper roomsMapper;
+    @Resource
+    private BuildHeatInfoMapper buildHeatInfoMapper;
+    @Resource
+    private UnitsMapper unitsMapper;
+    @Override
+    public Integer addBuilding(Map<String, Object> map) {
+        return buildsMapper.addBuilding(map);
+    }
+    @Override
+    public Map<String, Object> checkBuilding(Map<String, Object> map) {
+        return buildsMapper.checkBuilding(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getBuildingList(Map<String, Object> map) {
+        if(map.get("page")!=null&&map.get("limit")!=null) {
+            map=Page.getData(map);
+        }
+        return buildsMapper.getBuildingList(map);
+    }
+
+    @Override
+    public Integer getBuildingListCount(Map<String, Object> map) {
+        return buildsMapper.getBuildingListCount(map);
+    }
+
+    @Override
+    public Builds getBuildingInfo(Integer id) {
+        return buildsMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void editBuilding(Map<String, Object> map) {
+        buildsMapper.updateBuilding(map);
+    }
+
+    @Override
+    public void addBuildHeatInfo(Integer build_id) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("build_id",build_id);
+        BuildHeatInfo buildHeatInfo=new BuildHeatInfo();
+        buildHeatInfo.setBuild_id(build_id);
+        //总户数
+        Integer total_count=roomsMapper.getBuildingRoomsListCount(map);
+        //总建筑面积
+        double total_room_area=0.00;
+        //总供暖面积
+        double total_heat_area=0.00;
+
+        //供暖户数
+        int heat_count=0;
+        //实际供暖面积
+        double real_heat_area=0.00;
+
+        List<Map<String,Object>> list=roomsMapper.getBuildingRoomsList(map);
+        for(int i=0;i<list.size();i++){
+            Map<String,Object> map1=list.get(i);
+            Double room_area=Double.valueOf(String.valueOf(map1.get("room_area")));
+            total_room_area+=room_area;
+            Double heat_area=Double.valueOf(String.valueOf(map1.get("heat_area")));
+            total_heat_area+=heat_area;
+            Integer is_supply=Integer.parseInt(String.valueOf(map1.get("is_supply")));
+            if(is_supply==1){
+                heat_count++;
+                real_heat_area+=heat_area;
+            }
+        }
+        buildHeatInfo.setHeat_count(heat_count);
+        buildHeatInfo.setReal_heat_area(real_heat_area);
+        buildHeatInfo.setTotal_count(total_count);
+        buildHeatInfo.setTotal_room_area(total_room_area);
+        buildHeatInfo.setTotal_heat_area(total_heat_area);
+        buildHeatInfoMapper.insertSelective(buildHeatInfo);
+    }
+    @Override
+    public void updateBuildHeatInfo(Integer build_id) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("build_id",build_id);
+        BuildHeatInfo buildHeatInfo=new BuildHeatInfo();
+        buildHeatInfo.setBuild_id(build_id);
+        //总户数
+        Integer total_count=roomsMapper.getBuildingRoomsListCount(map);
+        //总建筑面积
+        double total_room_area=0.00;
+        double total_heat_area=0.00;
+        //总供暖面积
+        //供暖户数
+        int heat_count=0;
+        double real_heat_area=0.00;
+        //实际供暖面积
+        List<Map<String,Object>> list=roomsMapper.getBuildingRoomsList(map);
+        for(int i=0;i<list.size();i++){
+            Map<String,Object> map1=list.get(i);
+            Double room_area=Double.valueOf(String.valueOf(map1.get("room_area")));
+            total_room_area+=room_area;
+            Double heat_area=Double.valueOf(String.valueOf(map1.get("heat_area")));
+            total_heat_area+=heat_area;
+            Integer is_supply=Integer.parseInt(String.valueOf(map1.get("is_supply")));
+            if(is_supply==1){
+                heat_count++;
+                real_heat_area+=heat_area;
+            }
+        }
+        buildHeatInfo.setHeat_count(heat_count);
+        buildHeatInfo.setReal_heat_area(real_heat_area);
+        buildHeatInfo.setTotal_count(total_count);
+        buildHeatInfo.setTotal_room_area(total_room_area);
+        buildHeatInfo.setTotal_heat_area(total_heat_area);
+        buildHeatInfoMapper.updateByPrimaryKey(buildHeatInfo);
+    }
+
+    @Override
+    public List<Map<String, Object>> getUnitsByBuilding(Integer build_id) {
+        return unitsMapper.getUnitsListByBuilding(build_id);
+    }
+
+    @Override
+    public void deleteBuilding(Integer id) {
+        buildsMapper.deleteByPrimaryKey(id);
+    }
+}

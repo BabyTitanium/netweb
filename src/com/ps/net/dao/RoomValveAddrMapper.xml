@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.RoomValveAddrMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.RoomValveAddr">
+    <id column="room_id" jdbcType="INTEGER" property="room_id" />
+    <result column="valve_addr" jdbcType="VARCHAR" property="valve_addr" />
+    <result column="stopped" jdbcType="INTEGER" property="stopped" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="start_time" />
+    <result column="stop_time" jdbcType="TIMESTAMP" property="stop_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    room_id, valve_addr, stopped, start_time, stop_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room_valve_addr
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from room_valve_addr
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.RoomValveAddr">
+    insert into room_valve_addr (room_id, valve_addr, stopped, 
+      start_time, stop_time)
+    values (#{room_id,jdbcType=INTEGER}, #{valve_addr,jdbcType=VARCHAR}, #{stopped,jdbcType=INTEGER}, 
+      #{start_time,jdbcType=TIMESTAMP}, #{stop_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.RoomValveAddr">
+    insert into room_valve_addr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="valve_addr != null">
+        valve_addr,
+      </if>
+      <if test="stopped != null">
+        stopped,
+      </if>
+      <if test="start_time != null">
+        start_time,
+      </if>
+      <if test="stop_time != null">
+        stop_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="valve_addr != null">
+        #{valve_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.RoomValveAddr">
+    update room_valve_addr
+    <set>
+      <if test="valve_addr != null">
+        valve_addr = #{valve_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        stopped = #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        start_time = #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.RoomValveAddr">
+    update room_valve_addr
+    set valve_addr = #{valve_addr,jdbcType=VARCHAR},
+      stopped = #{stopped,jdbcType=INTEGER},
+      start_time = #{start_time,jdbcType=TIMESTAMP},
+      stop_time = #{stop_time,jdbcType=TIMESTAMP}
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateRoomValve" parameterType="java.util.Map">
+    update room_valve_addr
+    <set>
+      <if test="valve_addr != null">
+        valve_addr = #{valve_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        stopped = #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        start_time = #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </update>
+  <insert id="addRoomValve" parameterType="java.util.Map">
+    insert into room_valve_addr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="valve_addr != null">
+        valve_addr,
+      </if>
+      <if test="stopped != null">
+        stopped,
+      </if>
+      <if test="start_time != null">
+        start_time,
+      </if>
+      <if test="stop_time != null">
+        stop_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="valve_addr != null">
+        #{valve_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="getRoomValveAddr" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select * from room_valve_addr where room_id=#{room_id}
+  </select>
+
+  <select id="getRoomValveList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+    IFNULL(mdl.data_time,"-") as data_time,
+    IFNULL(mdl.set_temp,"-") as set_temp,
+    IFNULL(mdl.room_temp,"-") as room_temp,
+    IFNULL(mdl.valve_state,"-")  as valve_state,
+    IFNULL(mdl.scale,"-") as scale,
+    IFNULL(mdl.open_hours,"-") as open_hours,
+    IFNULL(mdl.in_temp,"-") as in_temp,
+    IFNULL(mdl.out_temp,"-")  as out_temp,
+    IFNULL(mdl.given_out_temp,"-") as given_out_temp,
+    IFNULL(mdl.power_status,"-") as power_status,
+    IFNULL(mdl.err_list,"-") as err_list,
+    g.* from valve_data_last mdl
+    RIGHT JOIN  (
+    select nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num, IFNULL(ema.valve_addr,"-") as valve_addr  from node_list_view nd
+    left join  room_valve_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.valve_addr=mdl.valve_addr
+    <if test=" onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>
+    <if test="first!=null and last!=null">
+      limit #{first},#{last}
+    </if>
+  </select>
+  <select id="getRoomValveListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(      SELECT
+    IFNULL(mdl.data_time,"-") as data_time,
+    IFNULL(mdl.set_temp,"-") as set_temp,
+    IFNULL(mdl.room_temp,"-") as room_temp,
+    IFNULL(mdl.valve_state,"-")  as valve_state,
+    IFNULL(mdl.scale,"-") as scale,
+    IFNULL(mdl.open_hours,"-") as open_hours,
+    IFNULL(mdl.in_temp,"-") as in_temp,
+    IFNULL(mdl.out_temp,"-")  as out_temp,
+    IFNULL(mdl.given_out_temp,"-") as given_out_temp,
+    IFNULL(mdl.power_status,"-") as power_status,
+    IFNULL(mdl.err_list,"-") as err_list,
+    g.* from valve_data_last mdl
+    RIGHT JOIN  (
+    select nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num, IFNULL(ema.valve_addr,"-") as valve_addr  from node_list_view nd
+    left join  room_valve_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.valve_addr=mdl.valve_addr
+    <if test="onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR ) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>) as m
+  </select>
+  <select id="getAllRoomValve" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+    IFNULL(mdl.data_time,"-") as data_time,
+    IFNULL(mdl.set_temp,"-") as set_temp,
+    IFNULL(mdl.room_temp,"-") as room_temp,
+    IFNULL(mdl.valve_state,"-")  as valve_state,
+    IFNULL(mdl.scale,"-") as scale,
+    IFNULL(mdl.open_hours,"-") as open_hours,
+    IFNULL(mdl.in_temp,"-") as in_temp,
+    IFNULL(mdl.out_temp,"-")  as out_temp,
+    IFNULL(mdl.given_out_temp,"-") as given_out_temp,
+    IFNULL(mdl.power_status,"-") as power_status,
+    IFNULL(mdl.err_list,"-") as err_list,
+    g.* from valve_data_last mdl
+    RIGHT JOIN  (
+    select nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num, IFNULL(ema.valve_addr,"-") as valve_addr  from node_list_view nd
+    left join  room_valve_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.valve_addr=mdl.valve_addr
+    <if test="onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL   24 HOUR) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>
+  </select>
+
+
+  <select id="getValveListOnlineCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(      SELECT
+    IFNULL(mdl.data_time,"-") as data_time,
+    IFNULL(mdl.set_temp,"-") as set_temp,
+    IFNULL(mdl.room_temp,"-") as room_temp,
+    IFNULL(mdl.valve_state,"-")  as valve_state,
+    IFNULL(mdl.scale,"-") as scale,
+    IFNULL(mdl.open_hours,"-") as open_hours,
+    IFNULL(mdl.in_temp,"-") as in_temp,
+    IFNULL(mdl.out_temp,"-")  as out_temp,
+    IFNULL(mdl.given_out_temp,"-") as given_out_temp,
+    IFNULL(mdl.power_status,"-") as power_status,
+    IFNULL(mdl.err_list,"-") as err_list,
+    g.* from valve_data_last mdl
+    RIGHT JOIN  (
+    select nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num, IFNULL(ema.valve_addr,"-") as valve_addr  from node_list_view nd
+    left join  room_valve_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.valve_addr=mdl.valve_addr
+      where mdl.data_time  <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR) ]]>
+  ) as m
+  </select>
+
+  <select id="getValveListOfflineCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(        SELECT
+    IFNULL(mdl.data_time,"-") as data_time,
+    IFNULL(mdl.set_temp,"-") as set_temp,
+    IFNULL(mdl.room_temp,"-") as room_temp,
+    IFNULL(mdl.valve_state,"-")  as valve_state,
+    IFNULL(mdl.scale,"-") as scale,
+    IFNULL(mdl.open_hours,"-") as open_hours,
+    IFNULL(mdl.in_temp,"-") as in_temp,
+    IFNULL(mdl.out_temp,"-")  as out_temp,
+    IFNULL(mdl.given_out_temp,"-") as given_out_temp,
+    IFNULL(mdl.power_status,"-") as power_status,
+    IFNULL(mdl.err_list,"-") as err_list,
+    g.* from valve_data_last mdl
+    RIGHT JOIN  (
+    select nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num, IFNULL(ema.valve_addr,"-") as valve_addr  from node_list_view nd
+    left join  room_valve_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.valve_addr=mdl.valve_addr
+       where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+  ) as m
+  </select>
+</mapper>

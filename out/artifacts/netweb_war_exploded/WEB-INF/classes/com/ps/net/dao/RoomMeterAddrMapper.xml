@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ps.net.dao.RoomMeterAddrMapper">
+
+  <resultMap id="BaseResultMap" type="com.ps.net.model.RoomMeterAddr">
+    <id column="room_id" jdbcType="INTEGER" property="room_id" />
+    <result column="meter_addr" jdbcType="CHAR" property="meter_addr" />
+    <result column="stopped" jdbcType="INTEGER" property="stopped" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="start_time" />
+    <result column="stop_time" jdbcType="TIMESTAMP" property="stop_time" />
+    <result column="meter_model" jdbcType="VARCHAR" property="meter_model" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    room_id, meter_addr, stopped, start_time, stop_time, meter_model
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room_meter_addr
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from room_meter_addr
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.RoomMeterAddr">
+    insert into room_meter_addr (room_id, meter_addr, stopped, 
+      start_time, stop_time, meter_model
+      )
+    values (#{room_id,jdbcType=INTEGER}, #{meter_addr,jdbcType=CHAR}, #{stopped,jdbcType=INTEGER}, 
+      #{start_time,jdbcType=TIMESTAMP}, #{stop_time,jdbcType=TIMESTAMP}, #{meter_model,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.RoomMeterAddr">
+    insert into room_meter_addr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="meter_addr != null">
+        meter_addr,
+      </if>
+      <if test="stopped != null">
+        stopped,
+      </if>
+      <if test="start_time != null">
+        start_time,
+      </if>
+      <if test="stop_time != null">
+        stop_time,
+      </if>
+      <if test="meter_model != null">
+        meter_model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="meter_addr != null">
+        #{meter_addr,jdbcType=CHAR},
+      </if>
+      <if test="stopped != null">
+        #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meter_model != null">
+        #{meter_model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.RoomMeterAddr">
+    update room_meter_addr
+    <set>
+      <if test="meter_addr != null">
+        meter_addr = #{meter_addr,jdbcType=CHAR},
+      </if>
+      <if test="stopped != null">
+        stopped = #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        start_time = #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meter_model != null">
+        meter_model = #{meter_model,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.RoomMeterAddr">
+    update room_meter_addr
+    set meter_addr = #{meter_addr,jdbcType=CHAR},
+      stopped = #{stopped,jdbcType=INTEGER},
+      start_time = #{start_time,jdbcType=TIMESTAMP},
+      stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      meter_model = #{meter_model,jdbcType=VARCHAR}
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </update>
+  <select id="getRoomMeterList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT IFNULL(mdl.battery_status,"-") as battery_status,IFNULL(mdl.cu_cool,"-") as cu_cool,IFNULL(mdl.cu_flow,"-")as cu_flow,IFNULL(mdl.cu_heat,"-") as cu_heat,
+    IFNULL(mdl.data_time,"-")as data_time,
+    IFNULL(mdl.diff_temp,"-") as diff_temp,
+    IFNULL(mdl.err_list,"-") as err_list,
+    IFNULL(mdl.heat_power,"-") as heat_power,
+    IFNULL(mdl.flow_rate,"-") as flow_rate,
+    IFNULL(mdl.hours,"-") as hours,
+    IFNULL(mdl.in_temp,"-")as in_temp,
+    IFNULL(mdl.out_temp,"-")as out_temp,g.* from meter_data_last mdl
+    RIGHT JOIN  (
+ select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,   IFNULL(ema.meter_addr,"-") as meter_addr ,   IFNULL( ema.meter_model,"-") as meter_model from node_list_view nd
+    left join  room_meter_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.meter_addr=mdl.meter_addr
+    <if test=" onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>
+
+    <if test="first!=null and last!=null">
+      limit #{first},#{last}
+    </if>
+  </select>
+  <select id="getRoomMeterListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(       SELECT IFNULL(mdl.battery_status,"-"),IFNULL(mdl.cu_cool,"-"),IFNULL(mdl.cu_flow,"-"),IFNULL(mdl.cu_heat,"-"),
+    IFNULL(mdl.data_time,"-"),
+    IFNULL(mdl.diff_temp,"-"),
+    IFNULL(mdl.err_list,"-"),
+    IFNULL(mdl.heat_power,"-"),
+    IFNULL(mdl.flow_rate,"-"),
+    IFNULL(mdl.hours,"-"),
+    IFNULL(mdl.in_temp,"-"),
+    IFNULL(mdl.out_temp,"-"),g.* from meter_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,   IFNULL(ema.meter_addr,"-") as meter_addr ,   IFNULL( ema.meter_model,"-") as meter_model from node_list_view nd
+    left join  room_meter_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.meter_addr=mdl.meter_addr
+    <if test="onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR ) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>) as m
+  </select>
+  <update id="updateRoomMeter" parameterType="java.util.Map">
+    update room_meter_addr
+    <set>
+      <if test="meter_addr != null">
+        meter_addr = #{meter_addr,jdbcType=CHAR},
+      </if>
+      <if test="stopped != null">
+        stopped = #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        start_time = #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meter_model != null">
+        meter_model = #{meter_model,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_id = #{room_id,jdbcType=INTEGER}
+  </update>
+  <insert id="addRoomMeter" parameterType="java.util.Map">
+    insert into room_meter_addr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="meter_addr != null">
+        meter_addr,
+      </if>
+      <if test="stopped != null">
+        stopped,
+      </if>
+      <if test="start_time != null">
+        start_time,
+      </if>
+      <if test="stop_time != null">
+        stop_time,
+      </if>
+      <if test="meter_model != null">
+        meter_model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="meter_addr != null">
+        #{meter_addr,jdbcType=CHAR},
+      </if>
+      <if test="stopped != null">
+        #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meter_model != null">
+        #{meter_model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="getRoomMeterAddr" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select * from room_meter_addr where room_id=#{room_id}
+  </select>
+  <select id="getAllRoomMeter" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT IFNULL(mdl.battery_status,"-") as battery_status,IFNULL(mdl.cu_cool,"-") as cu_cool,IFNULL(mdl.cu_flow,"-")as cu_flow,IFNULL(mdl.cu_heat,"-") as cu_heat,
+    IFNULL(mdl.data_time,"-")as data_time,
+    IFNULL(mdl.diff_temp,"-") as diff_temp,
+    IFNULL(mdl.err_list,"-") as err_list,
+    IFNULL(mdl.heat_power,"-") as heat_power,
+    IFNULL(mdl.flow_rate,"-") as flow_rate,
+    IFNULL(mdl.hours,"-") as hours,
+    IFNULL(mdl.in_temp,"-")as in_temp,
+    IFNULL(mdl.out_temp,"-")as out_temp,g.* from meter_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,   IFNULL(ema.meter_addr,"-") as meter_addr ,   IFNULL( ema.meter_model,"-") as meter_model from node_list_view nd
+    left join  room_meter_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.meter_addr=mdl.meter_addr
+  <if test="onlineState=='online'">
+    where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL   24 HOUR) ]]>
+  </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>
+  </select>
+
+
+  <select id="getMeterListOnlineCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(       SELECT IFNULL(mdl.battery_status,"-"),IFNULL(mdl.cu_cool,"-"),IFNULL(mdl.cu_flow,"-"),IFNULL(mdl.cu_heat,"-"),
+    IFNULL(mdl.data_time,"-"),
+    IFNULL(mdl.diff_temp,"-"),
+    IFNULL(mdl.err_list,"-"),
+    IFNULL(mdl.heat_power,"-"),
+    IFNULL(mdl.flow_rate,"-"),
+    IFNULL(mdl.hours,"-"),
+    IFNULL(mdl.in_temp,"-"),
+    IFNULL(mdl.out_temp,"-"),g.* from meter_data_last mdl
+    RIGHT JOIN  (
+   select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,   IFNULL(ema.meter_addr,"-") as meter_addr ,   IFNULL( ema.meter_model,"-") as meter_model from node_list_view nd
+    left join  room_meter_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.meter_addr=mdl.meter_addr
+      where mdl.data_time  <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR) ]]>
+  ) as m
+  </select>
+
+  <select id="getMeterListOfflineCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(       SELECT IFNULL(mdl.battery_status,"-"),IFNULL(mdl.cu_cool,"-"),IFNULL(mdl.cu_flow,"-"),IFNULL(mdl.cu_heat,"-"),
+    IFNULL(mdl.data_time,"-"),
+    IFNULL(mdl.diff_temp,"-"),
+    IFNULL(mdl.err_list,"-"),
+    IFNULL(mdl.heat_power,"-"),
+    IFNULL(mdl.flow_rate,"-"),
+    IFNULL(mdl.hours,"-"),
+    IFNULL(mdl.in_temp,"-"),
+    IFNULL(mdl.out_temp,"-"),g.* from meter_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,   IFNULL(ema.meter_addr,"-") as meter_addr ,   IFNULL( ema.meter_model,"-") as meter_model from node_list_view nd
+    left join  room_meter_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.meter_addr=mdl.meter_addr
+       where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+  ) as m
+  </select>
+</mapper>
