@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.ValveDataLastMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.ValveDataLast">
+    <id column="valve_addr" jdbcType="CHAR" property="valve_addr" />
+    <result column="data_time" jdbcType="TIMESTAMP" property="data_time" />
+    <result column="set_temp" jdbcType="DOUBLE" property="set_temp" />
+    <result column="room_temp" jdbcType="DOUBLE" property="room_temp" />
+    <result column="valve_state" jdbcType="INTEGER" property="valve_state" />
+    <result column="scale" jdbcType="INTEGER" property="scale" />
+    <result column="open_hours" jdbcType="DOUBLE" property="open_hours" />
+    <result column="in_temp" jdbcType="DOUBLE" property="in_temp" />
+    <result column="out_temp" jdbcType="DOUBLE" property="out_temp" />
+    <result column="given_out_temp" jdbcType="DOUBLE" property="given_out_temp" />
+    <result column="power_status" jdbcType="INTEGER" property="power_status" />
+    <result column="controler_status" jdbcType="INTEGER" property="controler_status" />
+    <result column="min_scale" jdbcType="INTEGER" property="min_scale" />
+    <result column="max_scale" jdbcType="INTEGER" property="max_scale" />
+    <result column="err_list" jdbcType="VARCHAR" property="err_list" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    valve_addr, data_time, set_temp, room_temp, valve_state, scale, open_hours, in_temp, 
+    out_temp, given_out_temp, power_status, controler_status, min_scale, max_scale, err_list
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from valve_data_last
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from valve_data_last
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.ValveDataLast">
+    insert into valve_data_last (valve_addr, data_time, set_temp, 
+      room_temp, valve_state, scale, 
+      open_hours, in_temp, out_temp, 
+      given_out_temp, power_status, controler_status, 
+      min_scale, max_scale, err_list
+      )
+    values (#{valve_addr,jdbcType=CHAR}, #{data_time,jdbcType=TIMESTAMP}, #{set_temp,jdbcType=DOUBLE}, 
+      #{room_temp,jdbcType=DOUBLE}, #{valve_state,jdbcType=INTEGER}, #{scale,jdbcType=INTEGER}, 
+      #{open_hours,jdbcType=DOUBLE}, #{in_temp,jdbcType=DOUBLE}, #{out_temp,jdbcType=DOUBLE}, 
+      #{given_out_temp,jdbcType=DOUBLE}, #{power_status,jdbcType=INTEGER}, #{controler_status,jdbcType=INTEGER}, 
+      #{min_scale,jdbcType=INTEGER}, #{max_scale,jdbcType=INTEGER}, #{err_list,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.ValveDataLast">
+    insert into valve_data_last
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="valve_addr != null">
+        valve_addr,
+      </if>
+      <if test="data_time != null">
+        data_time,
+      </if>
+      <if test="set_temp != null">
+        set_temp,
+      </if>
+      <if test="room_temp != null">
+        room_temp,
+      </if>
+      <if test="valve_state != null">
+        valve_state,
+      </if>
+      <if test="scale != null">
+        scale,
+      </if>
+      <if test="open_hours != null">
+        open_hours,
+      </if>
+      <if test="in_temp != null">
+        in_temp,
+      </if>
+      <if test="out_temp != null">
+        out_temp,
+      </if>
+      <if test="given_out_temp != null">
+        given_out_temp,
+      </if>
+      <if test="power_status != null">
+        power_status,
+      </if>
+      <if test="controler_status != null">
+        controler_status,
+      </if>
+      <if test="min_scale != null">
+        min_scale,
+      </if>
+      <if test="max_scale != null">
+        max_scale,
+      </if>
+      <if test="err_list != null">
+        err_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="valve_addr != null">
+        #{valve_addr,jdbcType=CHAR},
+      </if>
+      <if test="data_time != null">
+        #{data_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="set_temp != null">
+        #{set_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="room_temp != null">
+        #{room_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="valve_state != null">
+        #{valve_state,jdbcType=INTEGER},
+      </if>
+      <if test="scale != null">
+        #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="open_hours != null">
+        #{open_hours,jdbcType=DOUBLE},
+      </if>
+      <if test="in_temp != null">
+        #{in_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="out_temp != null">
+        #{out_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="given_out_temp != null">
+        #{given_out_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="power_status != null">
+        #{power_status,jdbcType=INTEGER},
+      </if>
+      <if test="controler_status != null">
+        #{controler_status,jdbcType=INTEGER},
+      </if>
+      <if test="min_scale != null">
+        #{min_scale,jdbcType=INTEGER},
+      </if>
+      <if test="max_scale != null">
+        #{max_scale,jdbcType=INTEGER},
+      </if>
+      <if test="err_list != null">
+        #{err_list,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.ValveDataLast">
+    update valve_data_last
+    <set>
+      <if test="data_time != null">
+        data_time = #{data_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="set_temp != null">
+        set_temp = #{set_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="room_temp != null">
+        room_temp = #{room_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="valve_state != null">
+        valve_state = #{valve_state,jdbcType=INTEGER},
+      </if>
+      <if test="scale != null">
+        scale = #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="open_hours != null">
+        open_hours = #{open_hours,jdbcType=DOUBLE},
+      </if>
+      <if test="in_temp != null">
+        in_temp = #{in_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="out_temp != null">
+        out_temp = #{out_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="given_out_temp != null">
+        given_out_temp = #{given_out_temp,jdbcType=DOUBLE},
+      </if>
+      <if test="power_status != null">
+        power_status = #{power_status,jdbcType=INTEGER},
+      </if>
+      <if test="controler_status != null">
+        controler_status = #{controler_status,jdbcType=INTEGER},
+      </if>
+      <if test="min_scale != null">
+        min_scale = #{min_scale,jdbcType=INTEGER},
+      </if>
+      <if test="max_scale != null">
+        max_scale = #{max_scale,jdbcType=INTEGER},
+      </if>
+      <if test="err_list != null">
+        err_list = #{err_list,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.ValveDataLast">
+    update valve_data_last
+    set data_time = #{data_time,jdbcType=TIMESTAMP},
+      set_temp = #{set_temp,jdbcType=DOUBLE},
+      room_temp = #{room_temp,jdbcType=DOUBLE},
+      valve_state = #{valve_state,jdbcType=INTEGER},
+      scale = #{scale,jdbcType=INTEGER},
+      open_hours = #{open_hours,jdbcType=DOUBLE},
+      in_temp = #{in_temp,jdbcType=DOUBLE},
+      out_temp = #{out_temp,jdbcType=DOUBLE},
+      given_out_temp = #{given_out_temp,jdbcType=DOUBLE},
+      power_status = #{power_status,jdbcType=INTEGER},
+      controler_status = #{controler_status,jdbcType=INTEGER},
+      min_scale = #{min_scale,jdbcType=INTEGER},
+      max_scale = #{max_scale,jdbcType=INTEGER},
+      err_list = #{err_list,jdbcType=VARCHAR}
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </update>
+</mapper>

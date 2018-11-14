@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.BranchHeatInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.BranchHeatInfo">
+    <id column="branch_id" jdbcType="INTEGER" property="branch_id" />
+    <result column="total_count" jdbcType="INTEGER" property="total_count" />
+    <result column="total_room_area" jdbcType="DOUBLE" property="total_room_area" />
+    <result column="total_heat_area" jdbcType="DOUBLE" property="total_heat_area" />
+    <result column="heat_count" jdbcType="INTEGER" property="heat_count" />
+    <result column="real_heat_area" jdbcType="DOUBLE" property="real_heat_area" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    branch_id, total_count, total_room_area, total_heat_area, heat_count, real_heat_area
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from branch_heat_info
+    where branch_id = #{branch_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from branch_heat_info
+    where branch_id = #{branch_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.BranchHeatInfo">
+    insert into branch_heat_info (branch_id, total_count, total_room_area, 
+      total_heat_area, heat_count, real_heat_area
+      )
+    values (#{branch_id,jdbcType=INTEGER}, #{total_count,jdbcType=INTEGER}, #{total_room_area,jdbcType=DOUBLE}, 
+      #{total_heat_area,jdbcType=DOUBLE}, #{heat_count,jdbcType=INTEGER}, #{real_heat_area,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.BranchHeatInfo">
+    insert into branch_heat_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="branch_id != null">
+        branch_id,
+      </if>
+      <if test="total_count != null">
+        total_count,
+      </if>
+      <if test="total_room_area != null">
+        total_room_area,
+      </if>
+      <if test="total_heat_area != null">
+        total_heat_area,
+      </if>
+      <if test="heat_count != null">
+        heat_count,
+      </if>
+      <if test="real_heat_area != null">
+        real_heat_area,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="branch_id != null">
+        #{branch_id,jdbcType=INTEGER},
+      </if>
+      <if test="total_count != null">
+        #{total_count,jdbcType=INTEGER},
+      </if>
+      <if test="total_room_area != null">
+        #{total_room_area,jdbcType=DOUBLE},
+      </if>
+      <if test="total_heat_area != null">
+        #{total_heat_area,jdbcType=DOUBLE},
+      </if>
+      <if test="heat_count != null">
+        #{heat_count,jdbcType=INTEGER},
+      </if>
+      <if test="real_heat_area != null">
+        #{real_heat_area,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.BranchHeatInfo">
+    update branch_heat_info
+    <set>
+      <if test="total_count != null">
+        total_count = #{total_count,jdbcType=INTEGER},
+      </if>
+      <if test="total_room_area != null">
+        total_room_area = #{total_room_area,jdbcType=DOUBLE},
+      </if>
+      <if test="total_heat_area != null">
+        total_heat_area = #{total_heat_area,jdbcType=DOUBLE},
+      </if>
+      <if test="heat_count != null">
+        heat_count = #{heat_count,jdbcType=INTEGER},
+      </if>
+      <if test="real_heat_area != null">
+        real_heat_area = #{real_heat_area,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where branch_id = #{branch_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.BranchHeatInfo">
+    update branch_heat_info
+    set total_count = #{total_count,jdbcType=INTEGER},
+      total_room_area = #{total_room_area,jdbcType=DOUBLE},
+      total_heat_area = #{total_heat_area,jdbcType=DOUBLE},
+      heat_count = #{heat_count,jdbcType=INTEGER},
+      real_heat_area = #{real_heat_area,jdbcType=DOUBLE}
+    where branch_id = #{branch_id,jdbcType=INTEGER}
+  </update>
+  <select id="getBranchHeatInfo" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select  * from branch_heat_info where branch_id=#{branch_id}
+  </select>
+</mapper>

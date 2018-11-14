@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>$Title$</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script type="text/javascript" src="layui/jquery-2.2.4.min.js"></script>
+
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .layui-table td{
+            border-bottom: none;
+            border-left: none;
+            border-top: none;
+        }
+        .layui-table .chosed{
+            border-top: 1px solid #009E94;
+            border-bottom: 1px solid #009E94;
+            background-color: #f9f9f9;
+        }
+        .areachoose{
+            background-color: #f2f2f2;
+        }
+        .areachoose .area-top{
+            padding: 5px 0;
+        }
+        .areachoose .area-top .layui-btn{
+            float: right;
+        }
+        .areas{
+            padding: 20px 0px;
+        }
+        .areas span{
+            color: #009E94;
+            float: right;
+            padding-left: 10px;
+        }
+        .layui-table tr td{
+            border-bottom: 1px solid white;
+        }
+        .layui-table tr td:hover{
+            border-bottom: 1px solid #009E94;
+        }
+        .addContent{
+            margin: 20px;
+            border: 1px solid #009E94;
+            height: 40px;
+        }
+        .addDiv{
+            margin: 20px;
+        }
+        .addDiv button{
+            background-color: white;
+            color: #a7a7a7;
+            border: 1px dashed #a7a7a7;
+            font-size: 16px
+        }
+        .addDiv button:hover{
+            color: #a7a7a7;
+        }
+        .addContent input{
+            border:none;
+            height: 30px;
+            width: 70%;
+            margin: 5px;
+        }
+        .addContent button{
+            padding: 5px;
+            color: #009E94;
+            border: none;
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">所有商品</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="javascript:;">列表三</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">内容主体区域</div>
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script type="text/javascript" src="layui/layui.all.js"></script>
+<script>
+
+</script>
+</body>
+</html>

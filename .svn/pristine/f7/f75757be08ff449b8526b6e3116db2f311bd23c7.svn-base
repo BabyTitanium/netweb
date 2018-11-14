@@ -1,0 +1,81 @@
+/*组织架构管理*/
+.layui-table td{
+    border-bottom: none;
+    border-left: none;
+    border-top: none;
+}
+.layui-table .chosed{
+    border-top: 1px solid #009E94;
+    border-bottom: 1px solid #009E94;
+    background-color: #f9f9f9;
+}
+.areachoose{
+    background-color: #f2f2f2;
+}
+.areachoose .area-top{
+    padding: 5px 0;
+}
+.areachoose .area-top .layui-btn{
+    float: right;
+}
+.areas{
+    padding: 20px 0px;
+}
+.areas span{
+    color: #009E94;
+    float: right;
+    padding-left: 10px;
+}
+.layui-table tr td{
+    border-bottom: 1px solid white;
+}
+.layui-table tr td:hover{
+    border-bottom: 1px solid #009E94;
+}
+.addContent{
+    margin: 20px;
+    border: 1px solid #009E94;
+    height: 40px;
+}
+.addDiv{
+    margin: 20px;
+}
+.addDiv button{
+    background-color: white;
+    color: #a7a7a7;
+    border: 1px dashed #a7a7a7;
+    font-size: 16px
+}
+.addDiv button:hover{
+    color: #a7a7a7;
+}
+.addContent input{
+    border:none;
+    height: 30px;
+    width: 70%;
+    margin: 5px;
+}
+.addContent button{
+    padding: 5px;
+    color: #009E94;
+    border: none;
+    background-color: white;
+}
+
+/*重写layui-container*/
+
+@media screen and (min-width: 1200px){
+    .layui-container {
+        width: 970px;
+    }
+}
+@media screen and (min-width: 992px){
+    .layui-container {
+            width: 770px;
+    }
+}
+@media screen and (min-width: 768px){
+    .layui-container {
+        width:600px;
+    }
+}

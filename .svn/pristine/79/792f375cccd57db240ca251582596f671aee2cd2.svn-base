@@ -1,0 +1,174 @@
+package com.ps.net.service.impl;
+
+import com.ps.net.dao.*;
+import com.ps.net.model.BranchHeatInfo;
+import com.ps.net.model.Branchs;
+import com.ps.net.service.ZoneBranchService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import javax.jws.Oneway;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class ZoneBranchServiceImpl implements ZoneBranchService {
+    @Resource
+    private BranchsMapper branchsMapper;
+    @Resource
+    private BranchRoomMapper branchRoomMapper;
+    @Resource
+    private RoomsMapper roomsMapper;
+    @Resource
+    private BranchHeatInfoMapper branchHeatInfoMapper;
+    @Resource
+    BuildBranchMapper buildBranchMapper;
+    @Override
+    public List<Map<String, Object>> getBranchList(Map<String, Object> map) {
+        if(map.get("page")!=null&&map.get("limit")!=null) {
+            Integer page = Integer.parseInt(String.valueOf(map.get("page")));
+            Integer limit = Integer.parseInt(String.valueOf(map.get("limit")));
+            Integer first;
+            Integer last;
+            first = (page - 1) * limit;
+            last = page * limit;
+            map.put("first", first);
+            map.put("last", last);
+        }
+        return branchsMapper.getBranchList(map);
+    }
+
+    @Override
+    public Integer getBranchListCount(Map<String, Object> map) {
+        return branchsMapper.getBranchListCount(map);
+    }
+
+    @Override
+    public void addBranch(Map<String, Object> map) {
+        branchsMapper.addBranch(map);
+    }
+
+    @Override
+    public Branchs getBranch(Integer id) {
+        return branchsMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void changeBranchInfo(Map<String, Object> branch) {
+        branchsMapper.updateByPrimaryKeySelective(branch);
+    }
+
+    @Override
+    public void deleteBranchInfo(Integer id) {
+        branchsMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Object> checkBranch(Map<String, Object> map) {
+        return branchsMapper.checkBranch(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getBranchRoom(Map map) {
+        return branchRoomMapper.getBranchRoom(map);
+    }
+
+    @Override
+    public void addBranchRoom(Map<String, Object> map) {
+        branchRoomMapper.addBranchRoom(map);
+    }
+
+    @Override
+    public void batchDeleteBranchRoom(Integer branch_id) {
+        branchRoomMapper.batchDeleteBranchRoom(branch_id);
+    }
+
+    @Override
+    public void addBranchHeatInfo(Integer branch_id) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("branch_id",branch_id);
+        List<Map<String,Object>> list=getBranchRoom(map);
+        if(list.size()>=0){
+            int total_count=branchRoomMapper.getBranchRoomCount(map);
+            //总建筑面积
+            double total_room_area=0.00;
+            //总供暖面积
+            double total_heat_area=0.00;
+
+            //供暖户数
+            int heat_count=0;
+            //实际供暖面积
+            double real_heat_area=0.00;
+            BranchHeatInfo  branchHeatInfo=new BranchHeatInfo();
+            for(int i=0;i<list.size();i++){
+
+                Map<String,Object> branch_room=list.get(i);
+                Integer room_id=Integer.parseInt(String.valueOf(branch_room.get("room_id")));
+                Map<String,Object> room=roomsMapper.getRoomInfo(room_id);
+                Double room_area=Double.valueOf(String.valueOf(room.get("room_area")));
+                total_room_area+=room_area;
+                Double heat_area=Double.valueOf(String.valueOf(room.get("heat_area")));
+                total_heat_area+=heat_area;
+                Integer is_supply=Integer.parseInt(String.valueOf(room.get("is_supply")));
+                if(is_supply==1){
+                    heat_count++;
+                    real_heat_area+=heat_area;
+                }
+            }
+            branchHeatInfo.setBranch_id(branch_id);
+            branchHeatInfo.setHeat_count(heat_count);
+            branchHeatInfo.setReal_heat_area(real_heat_area);
+            branchHeatInfo.setTotal_count(total_count);
+            branchHeatInfo.setTotal_heat_area(total_heat_area);
+            branchHeatInfo.setTotal_room_area(total_room_area);
+            branchHeatInfoMapper.insertSelective(branchHeatInfo);
+        }
+
+    }
+    @Override
+    public void updateBranchHeatInfo(Integer branch_id) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("branch_id",branch_id);
+        List<Map<String,Object>> list=getBranchRoom(map);
+        if(list.size()>=0){
+            int total_count=branchRoomMapper.getBranchRoomCount(map);
+            //总建筑面积
+            double total_room_area=0.00;
+            //总供暖面积
+            double total_heat_area=0.00;
+
+            //供暖户数
+            int heat_count=0;
+            //实际供暖面积
+            double real_heat_area=0.00;
+            for(int i=0;i<list.size();i++){
+                BranchHeatInfo  branchHeatInfo=new BranchHeatInfo();
+                Map<String,Object> branch_room=list.get(i);
+                Integer room_id=Integer.parseInt(String.valueOf(branch_room.get("room_id")));
+                Map<String,Object> room=roomsMapper.getRoomInfo(room_id);
+                Double room_area=Double.valueOf(String.valueOf(room.get("room_area")));
+                total_room_area+=room_area;
+                Double heat_area=Double.valueOf(String.valueOf(room.get("heat_area")));
+                total_heat_area+=heat_area;
+                Integer is_supply=Integer.parseInt(String.valueOf(room.get("is_supply")));
+                if(is_supply==1){
+                    heat_count++;
+                    real_heat_area+=heat_area;
+                }
+                branchHeatInfo.setBranch_id(branch_id);
+                branchHeatInfo.setHeat_count(heat_count);
+                branchHeatInfo.setReal_heat_area(real_heat_area);
+                branchHeatInfo.setTotal_count(total_count);
+                branchHeatInfo.setTotal_heat_area(total_heat_area);
+                branchHeatInfo.setTotal_room_area(total_room_area);
+                branchHeatInfoMapper.updateByPrimaryKey(branchHeatInfo);
+            }
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> getBuildBranchNoSet(Map<String, Object> map) {
+        return buildBranchMapper.selectBuildBranchNoSet(map);
+    }
+}

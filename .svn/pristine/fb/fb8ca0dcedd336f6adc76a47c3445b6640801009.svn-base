@@ -1,0 +1,623 @@
+package com.ps.net.controller;
+
+import com.ps.net.changeObject.ExcelUntil;
+import com.ps.net.changeObject.ExtraBean;
+import com.ps.net.changeObject.ExtraMethod;
+import com.ps.net.dao.*;
+import com.ps.net.model.*;
+import com.ps.net.service.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping("sysIndex")
+public class ZoneRoomController {
+    @Autowired
+    private ZoneRoomService zoneRoomService;
+    @Autowired
+    private RoomLocationMapper roomLocationMapper;
+    @Autowired
+    private CustomTypeMapper customTypeMapper;
+    @Autowired
+    private HeatTypeMapper heatTypeMapper;
+    @Autowired
+    private BuildsMapper buildsMapper;
+    @Autowired
+    private ZonesMapper zonesMapper;
+    @Autowired
+    private ZoneBuildingService zoneBuildingService;
+    @Autowired
+    private ZoneRoomMeterService zoneRoomMeterService;
+    @Autowired
+    private ZoneRoomValveService zoneRoomValveService;
+    @Autowired
+    private RoomLocationService roomLocationService;
+    @Autowired
+    private CustomTypeService customTypeService;
+    @Autowired
+    private HeatTypeService heatTypeService;
+    @RequestMapping(value = "zoneRoomsManage")
+    @RequiresPermissions("sysIndex")
+    public String index(Integer id, ModelMap map){
+        map.addAttribute("id",id);
+        return "zoneRoom";
+    }
+    @RequestMapping(value = "getZoneBuildings",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody List<Map<String,Object>> getZoneBuildings(Integer zone_id){
+        try {
+            List<Map<String,Object>> list=zoneRoomService.getBuildingsByZoneId(zone_id);
+            for(int i=0;i<list.size();i++){
+                Map<String,Object> condition=new HashMap<>();
+                Map<String,Object> room=list.get(i);
+                Integer build_id=Integer.parseInt(String.valueOf(room.get("id")));
+                condition.put("build_id",build_id);
+                Integer count=zoneRoomService.getBuildingRoomsListCount(condition);
+                room.put("num",count);
+            }
+            return list;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "roomsList")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody
+    Map<String,Object>getRoomsList(@RequestParam Map<String,Object> map){
+        Map<String,Object> data=new HashMap<>();
+        map=ExtraMethod.setNull(map);
+        try{
+            List<Map<String,Object>> list=zoneRoomService.getBuildingRoomsList(map);
+            for(int i=0;i<list.size();i++){
+                Map<String,Object> m=list.get(i);
+                String str=String.valueOf(m.get("update_time"));
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String format2 = format.format(format.parse(str));
+                m.put("update_time",format2);
+                //房间号
+                String b_num= String.valueOf(m.get("b_num"));
+                String u_num=String.valueOf(m.get("u_num"));
+                String r_num=String.valueOf(m.get("r_num"));
+                String rnum=b_num+"-"+u_num+"-"+r_num;
+                m.put("r_num",rnum);
+
+                Integer is_supply=Integer.parseInt(String.valueOf(m.get("is_supply")));
+                if(is_supply==0){
+                    m.put("is_supply","报停");
+                }else  if(is_supply==1){
+                    m.put("is_supply","供暖");
+                }
+                //计量方式
+                Integer charge_mode=Integer.parseInt(String.valueOf(m.get("charge_mode")));
+                if(charge_mode==0){
+                    m.put("charge_mode","面积");
+                }else  if(charge_mode==1){
+                    m.put("charge_mode","热量");
+                }
+            }
+            Integer count=zoneRoomService.getBuildingRoomsListCount(map);
+            return ExtraMethod.returnList(list,count);
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "addRoomInfo.do")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> addRoomInfo(@RequestParam Map<String,Object> map){
+        try {
+            Integer num=Integer.parseInt(String.valueOf(map.get("room_num")));
+            Integer floor=num/100;
+            map.put("floor",floor);
+            Map<String,String > result=new HashMap<>();
+            zoneRoomService.addRoomInfo(map);
+            result.put("state","success");
+            return result;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "checkUnit.do")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> checkUnit(@RequestParam Map<String,Object> map){
+        try {
+            Map<String,Object > result=new HashMap<>();
+            //根据build_id与unit_num查找
+            Map<String,Object> unit=zoneRoomService.checkUnit(map);
+            if(unit!=null){
+                result.put("state","success");
+                result.put("unit_id",unit.get("id"));
+            }else
+                result.put("state","error");
+            return result;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "addUnit.do")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> addUnit(@RequestParam Map<String,Object> map){
+        try {
+            Map<String,Object> result=new HashMap<>();
+            String unit_num=String.valueOf(map.get("unit_num"));
+            String unit_name=unit_num+"单元";
+            map.put("unit_name",unit_name);
+            Integer unit_id= zoneRoomService.addUnit(map);
+            result.put("unit_id",map.get("id"));
+            return  result;
+        }
+        catch (Exception e){
+            return  null;
+        }
+    }
+    @RequestMapping(value = "deleteRoom",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> deleteRoom(Integer id){
+        Map<String,Object> data=new HashMap<>();
+        try {
+            zoneRoomService.deleteRoom(id);
+            data.put("state","success");
+            return data;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "getRoomInfo",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> getRoomInfo(Integer id){
+        try {
+            Map<String,Object>  map=zoneRoomService.getRoomInfo(id);
+            return  map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "checkRoom",method = RequestMethod.POST)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> checkRoom(@RequestParam Map<String,Object> room){
+        Map<String,Object> data=new HashMap<>();
+        try {
+           Map<String,Object> map= zoneRoomService.checkRoom(room);
+            if(map!=null){
+                data.put("state","error");
+            }else
+                data.put("state","success");
+            return data;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "changeRoomInfo",method = RequestMethod.POST)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,Object> changeRoomInfo(@RequestParam Map<String,Object> room){
+        Map<String,Object> data=new HashMap<>();
+        try {
+             zoneRoomService.changeRoomInfo(room);
+            data.put("state","success");
+            return  data;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "batchEdit.do")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> batchEdit(@RequestParam Map<String,Object> data){
+        try {
+            Map<String,String> result=new HashMap<>();
+            String stringIds= String.valueOf( data.get("ids"));
+            Integer[] ids=ExtraMethod.changeToArray(stringIds);
+            data=ExtraMethod.setNull(data);
+            zoneRoomService.batchEditRoom(ids,data);
+            result.put("state","success");
+            return  result;
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+    @RequestMapping(value = "batchDelete.do")
+    @RequiresPermissions("sysIndex")
+     public @ResponseBody Map<String,String> batchDelete(@RequestParam String ids){
+        try {
+            Map<String,String> result=new HashMap<>();
+            Integer[] ides=ExtraMethod.changeToArray(ids);
+            zoneRoomService.batchDeleteRoom(ides);
+            result.put("state","success");
+            return  result;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "exportRoomExcel")
+    @RequiresPermissions("sysIndex")
+    public void exportRoomExcel(@RequestParam Map<String,Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception{
+          map.put("page",null);
+          map.put("limit",null);
+          map=ExtraMethod.setNull(map);
+          String zone_name="";
+          String build_name="";
+          if(map.get("zone_id")!=null&&map.containsKey("zone_id")){
+              Integer zid=Integer.parseInt(String.valueOf(map.get("zone_id")));
+              Zones zones=zonesMapper.selectZones(zid);
+              zone_name=zones.getZ_name();
+          }
+        if(map.get("build_id")!=null&&map.containsKey("build_id")){
+              Integer i=9;
+            Integer bid=Integer.parseInt(String.valueOf(map.get("build_id")));
+            Builds builds=buildsMapper.selectByPrimaryKey(bid);
+            build_name=builds.getBuild_name();
+        }
+            List<Map<String,Object>> list=zoneRoomService.getBuildingRoomsList(map);
+
+        for(int i=0;i<list.size();i++) {
+            Map<String, Object> m = list.get(i);
+            String str = String.valueOf(m.get("update_time"));
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String format2 = format.format(format.parse(str));
+            m.put("update_time", format2);
+            //房间号
+            String b_num = String.valueOf(m.get("b_num"));
+            String u_num = String.valueOf(m.get("u_num"));
+            String r_num = String.valueOf(m.get("r_num"));
+            String rnum = b_num + "-" + u_num + "-" + r_num;
+            m.put("r_num", rnum);
+            Integer is_supply = Integer.parseInt(String.valueOf(m.get("is_supply")));
+            if (is_supply == 0) {
+                m.put("is_supply", "报停");
+            } else if (is_supply == 1) {
+                m.put("is_supply", "供暖");
+            }
+            //计量方式
+            Integer charge_mode = Integer.parseInt(String.valueOf(m.get("charge_mode")));
+            if (charge_mode == 0) {
+                m.put("charge_mode", "面积");
+            } else if (charge_mode == 1) {
+                m.put("charge_mode", "热量");
+            }
+        }
+        HSSFWorkbook wb=ExcelUntil.getExcel("房间数据",ExtraBean.exportRoomExcel.rowsName,ExtraBean.exportRoomExcel.rowsType,list);
+        String fileName = "Excel-" +zone_name+build_name;
+        String headStr ="attachment;filename=\""+ new String( fileName.getBytes( "gb2312" ), "ISO8859-1" )+ ".xls" + "\"";
+    //    mResponse.setHeader( "Content-Disposition", "attachment;filename=\""+ new String( fileName.getBytes( "gb2312" ), "ISO8859-1" )+ ".xls" + "\"" );
+        response.setContentType("APPLICATION/OCTET-STREAM");
+        response.setHeader("Content-Disposition", headStr);
+        response.setCharacterEncoding("utf-8");
+        OutputStream out = response.getOutputStream();
+        wb.write(out);
+    }
+    @RequestMapping(value = "downloadTemplate.do")
+    @RequiresPermissions("sysIndex")
+    public void downloadTemplate(Integer template,HttpServletResponse response,HttpServletRequest request) throws Exception{
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+        String path = request.getServletContext().getRealPath("/WEB-INF/templates");
+        if(template==1){
+            path+="/用户信息导入模板.xlsx";
+        }else if (template==2){
+            path+="/供暖状态更新模板.xlsx";
+        }
+        File file=new File(path);
+        //获取文件的长度
+        long fileLength = file.length();
+
+        //设置文件输出类型
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-disposition", "attachment; filename="
+                + new String(file.getName().getBytes("utf-8"), "ISO8859-1"));
+        //设置输出长度
+        response.setHeader("Content-Length", String.valueOf(fileLength));
+        //获取输入流
+        bis = new BufferedInputStream(new FileInputStream(path));
+        //输出流
+        bos = new BufferedOutputStream(response.getOutputStream());
+        byte[] buff = new byte[2048];
+        int bytesRead;
+        while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+            bos.write(buff, 0, bytesRead);
+        }
+        //关闭流
+        bis.close();
+        bos.close();
+
+    }
+    @RequestMapping(value = "uploadRoomInfo")
+    @RequiresPermissions("sysIndex")
+//    @Transactional(rollbackFor = Exception.class)
+    public @ResponseBody Map<String,Object> uploadRoomInfo(@RequestParam("file") MultipartFile multfile,Integer zone_id){
+        Map<String,Object> result=new HashMap<>();
+        List<Map<String, Object>> list=null;
+        int updates=0;
+        int inserts=0;
+        try {
+            list= ExcelUntil.changeToMap(multfile, ExtraBean.importRoomExcel.importRoomType, ExtraBean.importRoomExcel.importRoomName);
+        }catch (Exception e) {
+            result.put("message", "数据处理异常");
+            return result;
+        }
+        try {
+            //分解楼栋房间号
+            for(int k=0;k<list.size();k++){
+                Map<String,Object> map=list.get(k);
+                map=ExtraMethod.setNull(map);
+                String room=String.valueOf(map.get("room_num"));
+                String [] names=ExtraMethod.changeRoomNum(room);
+                map.put("floor",names[3]);
+                Integer build=Integer.parseInt(names[0]);
+                Map<String,Object> condition1=new HashMap<>();
+                condition1.put("zone_id",zone_id);
+                condition1.put("build_num",build);
+                //根据小区id跟楼号id找出楼id
+                Map<String, Object> builds = zoneBuildingService.checkBuilding(condition1);
+                Integer build_id;
+                if(builds==null){
+                    String build_num=String.valueOf(condition1.get("build_num"));
+                    String build_name=build_num+"号楼";
+                    condition1.put("build_name",build_name);
+                        zoneBuildingService.addBuilding(condition1);
+                        build_id=Integer.parseInt(String.valueOf(condition1.get("id")));
+                }else{
+                          build_id=Integer.parseInt(String.valueOf(builds.get("id")));
+                }
+                Map<String,Object> condition2=new HashMap<>();
+                Integer unit=Integer.parseInt(names[1]);
+                condition2.put("build_id",build_id);
+                condition2.put("unit_num",unit);
+                //根据楼号id跟单元号找出单元id
+                Map<String,Object> units=zoneRoomService.checkUnit(condition2);
+                if(units!=null) {
+                    map.put("unit_id", units.get("id"));
+                }else {
+                    condition2.put("unit_name",String.valueOf(unit)+"单元");
+                    zoneRoomService.addUnit(condition2);
+                    map.put("unit_id", condition2.get("id"));
+                }
+                //房间号
+                map.put("room_num",names[2]);
+                //房间位置
+//                String locationName=String.valueOf(map.get("location"));
+                Map<String,Object> condition3=new HashMap<>();
+                condition3.put("location",map.get("location"));
+                RoomLocation location=roomLocationMapper.checkLocationExist(condition3).get(0);
+                map.put("location",location.getId());
+                //住户类型
+                Map<String,Object> condition4=new HashMap<>();
+                condition4.put("type_name",map.get("user_type"));
+                CustomType customType=customTypeMapper.selectByTypeName(condition4).get(0);
+                map.put("user_type",customType.getId());
+                //取暖类型
+                Map<String,Object> condition5=new HashMap<>();
+                condition5.put("type_name",map.get("heat_type"));
+                HeatType heatType=heatTypeMapper.selectByTypeName(condition5).get(0);
+                map.put("heat_type",heatType.getId());
+                //供暖状态
+                String is_supply=String.valueOf(map.get("is_supply"));
+                if(is_supply.equals("供暖")){
+                    map.put("is_supply",1);
+                }else  if(is_supply.equals("报停")){
+                    map.put("is_supply",0);
+                }
+                else throw new Exception();
+                //计量方式
+                String charge_mode=String.valueOf(map.get("charge_mode"));
+                if(charge_mode.equals("面积")){
+                    map.put("charge_mode",0);
+                }else  if(charge_mode.equals("热量")){
+                    map.put("charge_mode",1);
+                }
+                else throw  new Exception();
+            }
+
+        }catch (Exception e) {
+            result.put("message","含有不规范数据");
+            e.printStackTrace();
+            return result;
+        }
+       try{
+            //批量导入
+            for (int k=0;k<list.size();k++){
+                Map<String,Object> r=list.get(k);
+                Map<String,Object> m=zoneRoomService.checkRoom(r);
+                if(m!=null){
+                    r.put("id",m.get("id"));
+                    zoneRoomService.changeRoomInfo(r);
+                    updates++;
+                }else {
+                    zoneRoomService.addRoomInfo(r);
+                    inserts++;
+                }
+            }
+            result.put("code",0);
+            result.put("message","导入成功！");
+           result.put("updates",updates);
+           result.put("inserts",inserts);
+            return result;
+        }catch (Exception e) {
+           result.put("code",0);
+            result.put("message","导入时发生异常！");
+           result.put("updates",updates);
+           result.put("inserts",inserts);
+            return result;
+        }
+    }
+
+    @RequestMapping(value = "uploadIsSupply")
+    @RequiresPermissions("sysIndex")
+//    @Transactional(rollbackFor = Exception.class)
+    public @ResponseBody Map<String,Object> uploadIsSupply(@RequestParam("file") MultipartFile multfile,Integer zone_id){
+        Map<String,Object> result=new HashMap<>();
+        List<Map<String, Object>> list=null;
+        int updates=0;
+        int inserts=0;
+        try {
+            list= ExcelUntil.changeToMap(multfile, ExtraBean.importIsSupply.isSupplyType, ExtraBean.importIsSupply.isSupplyName);
+        }catch (Exception e) {
+            result.put("message", "数据处理异常");
+            return result;
+        }
+        try {
+            //分解楼栋房间号
+            for(int k=0;k<list.size();k++){
+                Map<String,Object> map=list.get(k);
+                map=ExtraMethod.setNull(map);
+                String room=String.valueOf(map.get("room_num"));
+                String [] names=ExtraMethod.changeRoomNum(room);
+                map.put("floor",names[3]);
+                Integer build=Integer.parseInt(names[0]);
+                Map<String,Object> condition1=new HashMap<>();
+                condition1.put("zone_id",zone_id);
+                condition1.put("build_num",build);
+                //根据小区id跟楼号id找出楼id
+                Map<String, Object> builds = zoneBuildingService.checkBuilding(condition1);
+                Integer build_id;
+                if(builds==null){
+                    String build_num=String.valueOf(condition1.get("build_num"));
+                    String build_name=build_num+"号楼";
+                    condition1.put("build_name",build_name);
+                    zoneBuildingService.addBuilding(condition1);
+                    build_id=Integer.parseInt(String.valueOf(condition1.get("id")));
+                }else{
+                    build_id=Integer.parseInt(String.valueOf(builds.get("id")));
+                }
+                Map<String,Object> condition2=new HashMap<>();
+                Integer unit=Integer.parseInt(names[1]);
+                condition2.put("build_id",build_id);
+                condition2.put("unit_num",unit);
+                //根据楼号id跟单元号找出单元id
+                Map<String,Object> units=zoneRoomService.checkUnit(condition2);
+                if(units!=null) {
+                    map.put("unit_id", units.get("id"));
+                }else {
+                    zoneRoomService.addUnit(condition2);
+                    map.put("unit_id", condition2.get("id"));
+                }
+                //房间号
+                map.put("room_num",names[2]);
+                //供暖状态
+                String is_supply=String.valueOf(map.get("is_supply"));
+                if(is_supply.equals("供暖")){
+                    map.put("is_supply",1);
+                }else  if(is_supply.equals("报停")){
+                    map.put("is_supply",0);
+                }
+                else throw new Exception();
+            }
+        }catch (Exception e) {
+            result.put("message","含有不规范数据");
+            return  result;
+        }
+        try{
+            //批量导入
+            for (int k=0;k<list.size();k++){
+                Map<String,Object> r=list.get(k);
+                Map<String,Object> m=zoneRoomService.checkRoom(r);
+                if(m!=null){
+                    r.put("id",m.get("id"));
+                    zoneRoomService.changeRoomInfo(r);
+                    updates++;
+                }else {
+                    zoneRoomService.addRoomInfo(r);
+                    inserts++;
+                }
+            }
+            result.put("code",0);
+            result.put("message","导入成功！");
+            result.put("updates",updates);
+            result.put("inserts",inserts);
+            return result;
+        }catch (Exception e) {
+            result.put("code",0);
+            result.put("message","导入时发生异常！");
+            result.put("updates",updates);
+            result.put("inserts",inserts);
+            return result;
+        }
+    }
+    @RequestMapping(value = "roomLocationList")
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody
+    Map<String,Object> roomLocationList(Integer page,Integer limit,String code,String location){
+        try {
+            if(code==""){
+                code=null;
+            }
+            if(location==""){
+                location=null;
+            }
+            Map<String,Object> map=new HashMap<>();
+            List<RoomLocation> list=roomLocationService.getRoomLocationList(page,limit,code,location);
+            Integer count=roomLocationService.getRoomLocationListCount(code,location);
+            map.put("code", 0);
+            map.put("msg", "");
+            map.put("data", list);
+            map.put("count",count);
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "customTypeList.do",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody
+    Map<String,Object> getCustomTypeList(Integer page,Integer limit,String type_name,String type_code){
+        try {
+            Map<String, Object> map = new HashMap<>();
+            if(type_name==""){
+                type_name=null;
+            }
+            if(type_code==""){
+                type_code=null;
+
+            }
+            List<CustomType> list = customTypeService.getCustomTypeList(page,limit,type_name,type_code);
+            Integer count=customTypeService.getCustomTypeListCount(type_name,type_code);
+            map.put("code", 0);
+            map.put("msg", "");
+            map.put("data", list);
+            map.put("count",count);
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "heatTypeList.do",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String, Object> getHeatTypeList(Integer page,Integer limit,String type_name,String type_code){
+        try {
+            Map<String, Object> map = new HashMap<>();
+            if(type_name==""){
+                type_name=null;
+            }
+            if(type_code==""){
+                type_code=null;
+            }
+            List<HeatType> list = heatTypeService.getHeatTypeList(page,limit,type_name,type_code);
+            Integer count=heatTypeService.getHeatTypeListCount(type_name,type_code);
+            map.put("code", 0);
+            map.put("msg", "");
+            map.put("data", list);
+            map.put("count",count);
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+}

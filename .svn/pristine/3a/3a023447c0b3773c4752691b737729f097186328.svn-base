@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.ZonesMapper">
+
+    <select id="selectZonesList" parameterType="java.lang.Integer" resultType="com.ps.net.model.Zones">
+        select * from zones WHERE heat_e_station_id=#{areaId} and  available=0 order  by id
+    </select>
+    <insert id="insertZones" parameterType="com.ps.net.model.Zones" keyProperty="id" useGeneratedKeys="true">
+        insert into zones
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+                 id,
+             </if>
+             <if test="z_name!=null">
+                 z_name,
+             </if>
+             <if test="code!=null">
+                 code,
+             </if>
+             <if test="city_code!=null">
+                 city_code,
+             </if>
+             <if test="heat_e_station_id!=null">
+                 heat_e_station_id,
+             </if>
+             <if test="data_period!=null">
+                 data_period,
+             </if>
+             <if test="available!=null">
+                 available,
+             </if>
+             <if test="address!=null">
+                 address,
+             </if>
+             <if test="creator!=null">
+                 creator,
+             </if>
+             <if test="note!=null">
+                 note,
+             </if>
+             <if test="min_indoor_temp !=null">
+                 min_indoor_temp,
+             </if>
+             <if test="max_indoor_temp!=null">
+                 max_indoor_temp,
+             </if>
+             <if test="max_flow!=null">
+                 max_flow,
+             </if>
+             <if test="min_return_temp!=null">
+                 min_return_temp,
+             </if>
+             <if test="heat_type!=null">
+                 heat_type,
+             </if>
+             <if test="adviced_indoor_temp!=null">
+                 adviced_indoor_temp,
+             </if>
+         </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER },
+            </if>
+            <if test="z_name!=null">
+                #{z_name,jdbcType=VARCHAR},
+            </if>
+            <if test="code!=null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="city_code!=null">
+                #{city_code,jdbcType=VARCHAR},
+            </if>
+            <if test="heat_e_station_id!=null">
+                #{heat_e_station_id,jdbcType=INTEGER },
+            </if>
+            <if test="data_period!=null">
+                #{data_period,jdbcType=VARCHAR},
+            </if>
+            <if test="available!=null">
+                #{available,jdbcType=INTEGER },
+            </if>
+            <if test="address!=null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="creator!=null">
+                #{creator,jdbcType=INTEGER },
+            </if>
+            <if test="note!=null">
+                #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="min_indoor_temp !=null">
+                #{min_indoor_temp,jdbcType=DOUBLE },
+            </if>
+            <if test="max_indoor_temp!=null">
+                #{max_indoor_temp,jdbcType=DOUBLE },
+            </if>
+            <if test="max_flow!=null">
+                #{max_flow,jdbcType=DOUBLE },
+            </if>
+            <if test="min_return_temp!=null">
+                #{min_return_temp,jdbcType=DOUBLE },
+            </if>
+            <if test="heat_type!=null">
+                #{heat_type,jdbcType=INTEGER},
+            </if>
+            <if test="adviced_indoor_temp">
+                #{adviced_indoor_temp,jdbcType=DOUBLE}
+            </if>
+        </trim>
+    </insert>
+<select id="selectZones" parameterType="java.lang.Integer" resultType="com.ps.net.model.Zones">
+    select * from zones where id=#{id};
+</select>
+    <update id="updateZones" parameterType="com.ps.net.model.Zones">
+        update  zones
+        <set>
+            <if test="z_name!=null">
+                z_name=#{z_name},
+            </if>
+            <if test="code!=null">
+                code=#{code},
+            </if>
+            <if test="city_code!=null">
+                city_code=#{city_code},
+            </if>
+            <if test="heat_e_station_id!=null">
+                heat_e_station_id=#{heat_e_station_id},
+            </if>
+            <if test="data_period!=null">
+                data_period= #{data_period},
+            </if>
+            <if test="available!=null">
+                available= #{available},
+            </if>
+            <if test="address!=null">
+                address=#{address},
+            </if>
+            <if test="creator!=null">
+                creator= #{creator},
+            </if>
+            <if test="note!=null">
+                note=#{note},
+            </if>
+            <if test="min_indoor_temp !=null">
+                min_indoor_temp=#{min_indoor_temp },
+            </if>
+            <if test="max_indoor_temp!=null">
+                max_indoor_temp= #{max_indoor_temp},
+            </if>
+            <if test="max_flow!=null">
+                max_flow=#{max_flow},
+            </if>
+            <if test="min_return_temp!=null">
+                min_return_temp=#{min_return_temp},
+            </if>
+            <if test="heat_type!=null">
+                heat_type=#{heat_type},
+            </if>
+            <if test="adviced_indoor_temp">
+                adviced_indoor_temp=#{adviced_indoor_temp}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>

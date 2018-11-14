@@ -117,6 +117,7 @@
          <property name="maxAge" value="1800"/><!-- 单位S-->
     </bean>
     <!-- 定义会话管理器的操作 -->
+
     <bean id="sessionManager"
           class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!-- 定义的是全局的session会话超时时间，此操作会覆盖web.xml文件中的超时时间配置 5分钟-->
@@ -128,13 +129,13 @@
         <!-- 是否开启扫描 -->
         <property name="sessionValidationSchedulerEnabled" value="true"/>
         <!-- 定义Session可以进行序列化的工具类 -->
-        <property name="sessionDAO" ref="sessionDAO"/>
+        <!--<property name="sessionDAO" ref="sessionDAO"/>-->
         <!-- 所有的session一定要将id设置到Cookie之中，需要提供有Cookie的操作模版 -->
         <property name="sessionIdCookie" ref="sessionIdCookie"/>
         <!-- 定义sessionIdCookie模版可以进行操作的启用 -->
         <property name="sessionIdCookieEnabled" value="true"/>
         <!-- 去掉URL中的JSESSIONID -->
-        <property name="sessionIdUrlRewritingEnabled" value="true"/>
+        <property name="sessionIdUrlRewritingEnabled" value="false"/>
     </bean>
 
 

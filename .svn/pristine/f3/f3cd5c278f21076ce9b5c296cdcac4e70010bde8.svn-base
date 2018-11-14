@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.HeatSeasonMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.HeatSeason">
+    <id column="season_id" jdbcType="INTEGER" property="season_id" />
+    <result column="season_name" jdbcType="VARCHAR" property="season_name" />
+    <result column="start_date" jdbcType="DATE" property="start_date" />
+    <result column="end_date" jdbcType="DATE" property="end_date" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    season_id, season_name, start_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from heat_season
+    where season_id = #{season_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from heat_season
+    where season_id = #{season_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.HeatSeason">
+    insert into heat_season (season_id, season_name, start_date, 
+      end_date)
+    values (#{season_id,jdbcType=INTEGER}, #{season_name,jdbcType=VARCHAR}, #{start_date,jdbcType=DATE}, 
+      #{end_date,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.HeatSeason">
+    insert into heat_season
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="season_id != null">
+        season_id,
+      </if>
+      <if test="season_name != null">
+        season_name,
+      </if>
+      <if test="start_date != null">
+        start_date,
+      </if>
+      <if test="end_date != null">
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="season_id != null">
+        #{season_id,jdbcType=INTEGER},
+      </if>
+      <if test="season_name != null">
+        #{season_name,jdbcType=VARCHAR},
+      </if>
+      <if test="start_date != null">
+        #{start_date,jdbcType=DATE},
+      </if>
+      <if test="end_date != null">
+        #{end_date,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.HeatSeason">
+    update heat_season
+    <set>
+      <if test="season_name != null">
+        season_name = #{season_name,jdbcType=VARCHAR},
+      </if>
+      <if test="start_date != null">
+        start_date = #{start_date,jdbcType=DATE},
+      </if>
+      <if test="end_date != null">
+        end_date = #{end_date,jdbcType=DATE},
+      </if>
+    </set>
+    where season_id = #{season_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.HeatSeason">
+    update heat_season
+    set season_name = #{season_name,jdbcType=VARCHAR},
+      start_date = #{start_date,jdbcType=DATE},
+      end_date = #{end_date,jdbcType=DATE}
+    where season_id = #{season_id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectHeatSeasonList" parameterType="java.util.Map" resultType="com.ps.net.model.HeatSeason">
+    select * from heat_season where 1=1
+    <if test="season_name!=null">
+      and season_name like "%"#{season_name}"%"
+    </if>
+    <if test="start_date!=null">
+      and start_date like "%"#{start_date}"%"
+    </if>
+    <if test="end_date!=null">
+      and end_date like "%"#{end_date}"%"
+    </if>
+    order  by season_id
+    limit #{first},#{last}
+  </select>
+
+  <select id="selectHeatSeasonListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(select * from heat_season where 1=1
+    <if test="season_name!=null">
+      and season_name like "%"#{season_name}"%"
+    </if>
+    <if test="start_date!=null">
+      and start_date like "%"#{start_date}"%"
+    </if>
+    <if test="end_date!=null">
+      and end_date like "%"#{end_date}"%"
+    </if>
+    ) as g
+  </select>
+
+  <select id="selectByTypeName" parameterType="java.lang.String" resultType="com.ps.net.model.HeatSeason">
+    select * from heat_season where season_name=#{season_name}
+    <if test="season_id!=null">and season_id!=#{season_id}</if>
+  </select>
+  <select id="selectById" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select * from heat_season where season_id=#{id}
+  </select>
+  <update id="updateHeatSeason" parameterType="java.util.Map">
+    update heat_season
+    <set>
+      <if test="season_name != null">
+        season_name = #{season_name,jdbcType=VARCHAR},
+      </if>
+      <if test="start_date != null">
+        start_date = #{start_date,jdbcType=DATE},
+      </if>
+      <if test="end_date != null">
+        end_date = #{end_date,jdbcType=DATE},
+      </if>
+    </set>
+    where season_id = #{season_id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertHeatSeason" useGeneratedKeys="true" parameterType="java.util.Map">
+    insert into heat_season
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="season_id != null">
+        season_id,
+      </if>
+      <if test="season_name != null">
+        season_name,
+      </if>
+      <if test="start_date != null">
+        start_date,
+      </if>
+      <if test="end_date != null">
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="season_id != null">
+        #{season_id},
+      </if>
+      <if test="season_name != null">
+        #{season_name},
+      </if>
+      <if test="start_date != null">
+        #{start_date},
+      </if>
+      <if test="end_date != null">
+        #{end_date},
+      </if>
+    </trim>
+  </insert>
+</mapper>

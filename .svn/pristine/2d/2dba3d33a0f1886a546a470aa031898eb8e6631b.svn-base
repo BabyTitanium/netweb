@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.RoomTempAddrMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.RoomTempAddr">
+    <id column="room_id" jdbcType="INTEGER" property="room_id" />
+    <id column="index" jdbcType="INTEGER" property="index" />
+    <result column="temp_addr" jdbcType="VARCHAR" property="temp_addr" />
+    <result column="stopped" jdbcType="INTEGER" property="stopped" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="start_time" />
+    <result column="stop_time" jdbcType="TIMESTAMP" property="stop_time" />
+    <result column="temp_model" jdbcType="VARCHAR" property="temp_model" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    room_id, index, temp_addr, stopped, start_time, stop_time, temp_model
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.ps.net.model.RoomTempAddrKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room_temp_addr
+    where room_id = #{room_id,jdbcType=INTEGER}
+      and index = #{index,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ps.net.model.RoomTempAddrKey">
+    delete from room_temp_addr
+    where room_id = #{room_id,jdbcType=INTEGER}
+      and index = #{index,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.RoomTempAddr">
+    insert into room_temp_addr (room_id, index, temp_addr, 
+      stopped, start_time, stop_time, 
+      temp_model)
+    values (#{room_id,jdbcType=INTEGER}, #{index,jdbcType=INTEGER}, #{temp_addr,jdbcType=VARCHAR}, 
+      #{stopped,jdbcType=INTEGER}, #{start_time,jdbcType=TIMESTAMP}, #{stop_time,jdbcType=TIMESTAMP}, 
+      #{temp_model,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.RoomTempAddr">
+    insert into room_temp_addr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="index != null">
+        index,
+      </if>
+      <if test="temp_addr != null">
+        temp_addr,
+      </if>
+      <if test="stopped != null">
+        stopped,
+      </if>
+      <if test="start_time != null">
+        start_time,
+      </if>
+      <if test="stop_time != null">
+        stop_time,
+      </if>
+      <if test="temp_model != null">
+        temp_model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="index != null">
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="temp_addr != null">
+        #{temp_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="temp_model != null">
+        #{temp_model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.RoomTempAddr">
+    update room_temp_addr
+    <set>
+      <if test="temp_addr != null">
+        temp_addr = #{temp_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        stopped = #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        start_time = #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="temp_model != null">
+        temp_model = #{temp_model,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_id = #{room_id,jdbcType=INTEGER}
+      and index = #{index,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.RoomTempAddr">
+    update room_temp_addr
+    set temp_addr = #{temp_addr,jdbcType=VARCHAR},
+      stopped = #{stopped,jdbcType=INTEGER},
+      start_time = #{start_time,jdbcType=TIMESTAMP},
+      stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      temp_model = #{temp_model,jdbcType=VARCHAR}
+    where room_id = #{room_id,jdbcType=INTEGER}
+      and index = #{index,jdbcType=INTEGER}
+  </update>
+
+
+  <!---->
+
+  <update id="updateRoomTemp" parameterType="java.util.Map">
+    update room_temp_addr
+    <set>
+      <if test="temp_addr != null">
+        temp_addr = #{temp_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        stopped = #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        start_time = #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="temp_model != null">
+        temp_model = #{temp_model,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_id = #{room_id,jdbcType=INTEGER}
+
+  </update>
+  <insert id="addRoomTemp" parameterType="java.util.Map">
+    insert into room_temp_addr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="index != null">
+        `index`,
+      </if>
+      <if test="temp_addr != null">
+        temp_addr,
+      </if>
+      <if test="stopped != null">
+        stopped,
+      </if>
+      <if test="start_time != null">
+        start_time,
+      </if>
+      <if test="stop_time != null">
+        stop_time,
+      </if>
+      <if test="temp_model != null">
+        temp_model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="room_id != null">
+        #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="index != null">
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="temp_addr != null">
+        #{temp_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="stopped != null">
+        #{stopped,jdbcType=INTEGER},
+      </if>
+      <if test="start_time != null">
+        #{start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_time != null">
+        #{stop_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="temp_model != null">
+        #{temp_model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="getRoomTempAddr" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select * from room_temp_addr where room_id=#{room_id}
+  </select>
+
+
+  <select id="getRoomTempList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.temp,"-") as temp,g.* from temp_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.temp_addr,"-")as  temp_addr , IFNULL(ema.temp_model,"-")as temp_model , IFNULL(ema.index,"-")as 'index'
+    from node_list_view nd
+    left join  room_temp_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.temp_addr=mdl.temp_addr
+    <if test=" onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>
+    <if test="first!=null and last!=null">
+      limit #{first},#{last}
+    </if>
+  </select>
+  <select id="getRoomTempListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(    SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.temp,"-") as temp,g.* from temp_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.temp_addr,"-")as  temp_addr , IFNULL(ema.temp_model,"-")as temp_model , IFNULL(ema.index,"-")as 'index'
+    from node_list_view nd
+    left join  room_temp_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.temp_addr=mdl.temp_addr
+    <if test="onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR ) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>) as m
+  </select>
+  <select id="getAllRoomTemp" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.temp,"-") as temp,g.* from temp_data_last mdl
+    RIGHT JOIN  (
+    select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.temp_addr,"-")as  temp_addr , IFNULL(ema.temp_model,"-")as temp_model , IFNULL(ema.index,"-")as 'index'
+    from node_list_view nd
+    left join  room_temp_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.temp_addr=mdl.temp_addr
+    <if test="onlineState=='online'">
+      where mdl.data_time <![CDATA[  >=DATE_SUB(NOW(),INTERVAL   24 HOUR) ]]>
+    </if>
+    <if test="onlineState=='offline'">
+      where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+    </if>
+  </select>
+
+
+  <select id="getTempListOnlineCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(   SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.temp,"-") as temp,g.* from temp_data_last mdl
+    RIGHT JOIN  (
+     select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.temp_addr,"-")as  temp_addr , IFNULL(ema.temp_model,"-")as temp_model , IFNULL(ema.index,"-")as 'index'
+    from node_list_view nd
+    left join  room_temp_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.temp_addr=mdl.temp_addr
+      where mdl.data_time  <![CDATA[  >=DATE_SUB(NOW(),INTERVAL 24 HOUR) ]]>
+  ) as m
+  </select>
+
+  <select id="getTempListOfflineCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from(     SELECT IFNULL(mdl.battery,"-") as battery,IFNULL(mdl.data_time,"-") as data_time,IFNULL(mdl.err_list,"-")as err_list,IFNULL(mdl.fixture,"-") as fixture,
+    IFNULL(mdl.fixture_num,"-")as fixture_num,
+    IFNULL(mdl.temp,"-") as temp,g.* from temp_data_last mdl
+    RIGHT JOIN  (
+     select  nd.b_num as b_num,nd.u_num as u_num,nd.r_num as r_num,  IFNULL(ema.temp_addr,"-")as  temp_addr , IFNULL(ema.temp_model,"-")as temp_model , IFNULL(ema.index,"-")as 'index'
+    from node_list_view nd
+    left join  room_temp_addr ema on  nd.id=ema.room_id where nd.zone_id=#{zone_id}) g
+    on g.temp_addr=mdl.temp_addr
+       where mdl.data_time <![CDATA[  <DATE_SUB(NOW(),INTERVAL 24 HOUR) or mdl.data_time is null ]]>
+  ) as m
+  </select>
+</mapper>

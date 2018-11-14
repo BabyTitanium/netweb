@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <!--&lt;!&ndash; 1. 数据源 : DriverManagerDataSource &ndash;&gt;-->
+    <context:property-placeholder location="classpath*:config/jdbc.properties" ignore-unresolvable="true"/>
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+
+    <!--
+        2. mybatis的SqlSession的工厂: SqlSessionFactoryBean dataSource:引用数据源
+
+        MyBatis定义数据源,同意加载配置
+    -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <!-- 自动扫描mapping.xml文件 -->
+        <property name="mapperLocations" value="classpath:com/ps/net/dao/*.xml"></property>
+    </bean>
+
+    <!--
+        3. mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory
+
+        basePackage:指定sql映射文件/接口所在的包（自动扫描）
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ps.net.dao"></property>
+
+    </bean>
+    <!--
+        4. 事务管理 : DataSourceTransactionManager dataSource:引用上面定义的数据源
+    -->
+    <bean id="txManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"></property>
+    </bean>
+    <!-- 5. 使用声明式事务
+         transaction-manager：引用上面定义的事务管理器
+     -->
+    <tx:annotation-driven transaction-manager="txManager" />
+
+    <!--shiro-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" /> <!--加载管理器-->
+        <property name="loginUrl" value="/index/login.do" />    <!--没有登录的时候，跳转到这个页面-->
+        <property name="unauthorizedUrl" value="/index/nopermission.do" /> <!--当没有权限的时候，跳转到这个url-->
+        <!--<property name="successUrl" value="/sysIndex/sysIndex.do" />-->
+
+
+        <property name="filterChainDefinitions">
+            <value>
+                /index/userLogin.do = anon <!--可以不需要登录-->
+                /index/loginIns.do = anon <!--可以不需要登录-->
+                /index/login.do = anon <!--可以不需要登录-->
+                /index/logout.do = anon  <!--可以不需要登录-->
+                /index/nopermission.do = anon
+                /index/* = authc <!-- authc 表示需要认证才能访问的页面 -->
+                /layui/**=anon
+                /colpicker/**=anon
+                 / = authc
+                /** =authc
+
+            </value>
+        </property>
+    </bean>
+    <!--<bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter">-->
+        <!--<property name="redirectUrl" value="/index/login.do" />-->
+    <!--</bean>-->
+    <!-- 自定义Realm -->
+    <bean id="myShiroRealm" class="com.ps.net.shiro.MyShiroReaml">
+        <!-- businessManager 用来实现用户名密码的查询 -->
+        <property name="shiroService" ref="accountService" />
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- 注入realm -->
+        <property name="realm" ref="myShiroRealm"/>
+        <property name="cacheManager" ref="cacheManager" />
+        <property name="sessionManager" ref="sessionManager" />
+    </bean>
+
+
+    <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+    <!-- 配置Session DAO的操作处理 -->
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <!-- 设置session缓存的名字，这个名字可以任意 -->
+        <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+        <!-- 定义该Session DAO操作中所使用的ID生成器 -->
+        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+    </bean>
+
+    <!-- 配置需要向Cookie中保存数据的配置模版 -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- 设置Cookie名字, 默认为: JSESSIONID 问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
+                                    当跳出SHIRO SERVLET时如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失! -->
+        <property name="name" value="SHIRO-COOKIE"/>
+        <!-- JSESSIONID的path为/用于多个系统共享JSESSIONID -->
+        <!-- <property name="path" value="/"/> -->
+        <!-- 浏览器中通过document.cookie可以获取cookie属性，设置了HttpOnly=true,在脚本中就不能的到cookie，可以避免cookie被盗用 -->
+        <property name="httpOnly" value="true"/>
+    </bean>
+    <!-- 定义会话管理器的操作 -->
+    <bean id="sessionManager"
+          class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 定义的是全局的session会话超时时间，此操作会覆盖web.xml文件中的超时时间配置 -->
+        <property name="globalSessionTimeout" value="1000000"/>
+        <!-- 删除所有无效的Session对象，此时的session被保存在了内存里面 -->
+        <property name="deleteInvalidSessions" value="true"/>
+        <!-- 检测扫描信息时间间隔,单位为毫秒-->
+        <property name="sessionValidationInterval" value="10000"/>
+        <!-- 是否开启扫描 -->
+        <property name="sessionValidationSchedulerEnabled" value="false"/>
+        <!-- 定义Session可以进行序列化的工具类 -->
+        <property name="sessionDAO" ref="sessionDAO"/>
+        <!-- 所有的session一定要将id设置到Cookie之中，需要提供有Cookie的操作模版 -->
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <!-- 定义sessionIdCookie模版可以进行操作的启用 -->
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <!-- 去掉URL中的JSESSIONID -->
+        <property name="sessionIdUrlRewritingEnabled" value="true"/>
+    </bean>
+
+
+    <!--声明一个Service 注入到自定义Realm-->
+    <bean id="accountService" class="com.ps.net.service.impl.ShiroServiceImpl"/>
+    <!-- <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManager" ref="cacheManager" /> </bean> -->
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 -->
+    <!-- 配置以下两个bean即可实现此功能 -->
+    <!-- Enable Shiro Annotations for Spring-configured beans. Only run after the lifecycleBeanProcessor has run -->
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+      <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+      </bean>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">/nopermission</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 配置ehcache 二级缓存-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:config/ehcache.xml"></property>
+    </bean>
+
+
+</beans>

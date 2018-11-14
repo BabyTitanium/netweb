@@ -1,0 +1,253 @@
+package com.ps.net.controller;
+
+
+import com.ps.net.dao.HeatCompanyInfoMapper;
+import com.ps.net.dao.UserBranchMapper;
+import com.ps.net.model.*;
+import com.ps.net.service.AreaChooseService;
+
+import com.ps.net.service.UserService;
+import com.ps.net.service.ZoneAlarmService;
+import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.security.auth.Subject;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+@Controller
+
+@RequestMapping("/sysIndex")
+
+public class AreaChooseController {
+    @Autowired
+    private AreaChooseService userservice;
+    @Autowired
+    private HeatCompanyInfoMapper heatCompanyInfoMapper;
+    @Autowired
+    private ZoneAlarmService zoneAlarmService;
+    @Autowired
+    private UserService userServices;
+    @Autowired
+    private UserBranchMapper userBranchMapper;
+    protected final Logger log = Logger.getLogger(this.getClass());
+    @RequestMapping(value = "/sysIndex")
+    @RequiresPermissions("sysIndex")
+    public String sysIndex(){
+        return "basicInfo";
+    }
+    @RequestMapping(value = "/companyList",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody
+    List<BranchCompany> getBranchCompanyList(){
+        log.info("数据库查询分公司列表");
+    //    Integer user_id=Integer.parseInt(String.valueOf(httpSession.getAttribute("user_id")));
+        Integer user_id=(Integer) SecurityUtils.getSubject().getSession().getAttribute("user_id");
+        List<BranchCompany> companyList=userservice.getBranchCompanyList(user_id);
+
+        return companyList;
+    }
+    @RequestMapping(value = "/areaList",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody
+    List<HeatArea> getHeatAreaList(Integer companyId,HttpSession httpSession){
+        log.info("数据库查询区域列表");
+        Integer user_id=Integer.parseInt(String.valueOf(httpSession.getAttribute("user_id")));
+        Map<String,Object> condition=new HashMap<>();
+        condition.put("user_id",user_id);
+        condition.put("companyId",companyId);
+        List<HeatArea> areaList=userservice.getHeatAreaList(condition);
+        return areaList;
+    }
+    @RequestMapping(value = "/zoneList",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody
+    List<Zones> getZoneList(Integer areaId){
+        log.info("数据库查询小区列表");
+        List<Zones> zonesList=userservice.getZonesList(areaId);
+        return zonesList;
+    }
+    @RequestMapping(value = "addBranchCompany",method =  RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> addBranchCompany(String companyName){
+        Map<String,String>map=new HashMap<>();
+        try {
+            BranchCompany branchCompany = new BranchCompany();
+            branchCompany.setName(companyName);
+            HeatCompanyInfo heatCompanyInfo=heatCompanyInfoMapper.getHeatCompanyInfo();
+            branchCompany.setHeat_company_id(heatCompanyInfo.getId());
+            userservice.addBranchCompany(branchCompany);
+//            添加用户对此分公司的权限20181010
+            UserBranch userBranch=new UserBranch();
+            userBranch.setBranch_id(branchCompany.getId());
+            Integer user_id=(Integer) SecurityUtils.getSubject().getSession().getAttribute("user_id");
+            userBranch.setUser_id(user_id);
+            userBranchMapper.insertSelective(userBranch);
+            map.put("state","success");
+            return map;
+        }catch (Exception e) {
+            return null;
+        }
+    }
+    @RequestMapping(value = "addHeatArea",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> addHeatArea(Integer branch_company_id,String areaName,HttpSession httpSession){
+        Map<String,String> map=new HashMap<>();
+        try {
+            HeatArea heatArea=new HeatArea();
+            heatArea.setBranch_company_id(branch_company_id);
+            heatArea.setName(areaName);
+            userservice.addHeatArea(heatArea);
+            //默认给用户添加区域权限
+            Integer area_id=heatArea.getId();
+            String area_name=heatArea.getName();
+            Map<String,Object> user_station=new HashMap<>();
+            Integer user_id=(Integer) httpSession.getAttribute("user_id");
+            user_station.put("user_id",user_id);
+            user_station.put("station_id",area_id);
+            user_station.put("station_name",area_name);
+            userServices.addUserStation(user_station);
+            map.put("state","success");
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "addZones",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> addZones(Integer heat_e_station_id,String zonesName){
+        Map<String,String> map=new HashMap<>();
+        try {
+            Zones zones=new Zones();
+            zones.setZ_name(zonesName);
+            zones.setHeat_e_station_id(heat_e_station_id);
+            userservice.addZones(zones);
+            //20180816添加报警信息
+//            List<AlarmsType> alarmsTypeList=zoneAlarmService.getAllAlarmsType();
+//            if(alarmsTypeList.size()>0){
+//                for (int i=0;i<alarmsTypeList.size();i++){
+//                    AlarmsType alarmsType=alarmsTypeList.get(i);
+//                        String  alarm_code=alarmsType.getAlarm_code();
+//                        ZoneAlarmValue zoneAlarmValue=new ZoneAlarmValue();
+//                        zoneAlarmValue.setZone_id(zones.getId());
+//                        zoneAlarmValue.setAlarm_code(alarm_code);
+//                        zoneAlarmValue.setAvailable(1);
+//                        zoneAlarmService.insertRecord(zoneAlarmValue);
+//                }
+//            }
+            map.put("state","success");
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "getBranchCompany",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public  @ResponseBody  BranchCompany getBranchCompanyInfo(Integer id){
+        return userservice.getBranchCompany(id);
+    }
+
+    @RequestMapping(value = "editBranchCompany",method = RequestMethod.POST)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> editBranchCompany(BranchCompany branchCompany){
+        Map<String,String> map=new HashMap<>();
+        try {
+            userservice.editBranchCompany(branchCompany);
+            map.put("state","success");
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "getHeatArea",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public  @ResponseBody  HeatArea getHeatAreaInfo(Integer id){
+        return userservice.getHeatArea(id);
+    }
+
+    @RequestMapping(value = "editHeatArea",method = RequestMethod.POST)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> editBranchCompany(HeatArea heatArea){
+        Map<String,String> map=new HashMap<>();
+        try {
+            userservice.editHeatArea(heatArea);
+            map.put("state","success");
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "getZones",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public  @ResponseBody  Zones getZonesInfo(Integer id){
+        return userservice.getZones(id);
+    }
+
+    @RequestMapping(value = "editZones",method = RequestMethod.POST)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> editZones(Zones zones){
+        Map<String,String> map=new HashMap<>();
+        try {
+            userservice.editZones(zones);
+            map.put("state","success");
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "deleteBranchCompany",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> deleteBranchCompany(Integer id){
+        Map<String,String> map=new HashMap<>();
+        try {
+            BranchCompany branchCompany=userservice.getBranchCompany(id);
+            branchCompany.setName(branchCompany.getName()+"_del");
+            branchCompany.setAvailable(1);
+            userservice.editBranchCompany(branchCompany);
+            map.put("state","success");
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "deleteHeatArea",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> deleteHeatArea(Integer id){
+        Map<String,String> map=new HashMap<>();
+        try {
+            HeatArea heatArea=userservice.getHeatArea(id);
+            heatArea.setName(heatArea.getName()+"_del");
+            heatArea.setAvailable(1);
+            userservice.editHeatArea(heatArea);
+            map.put("state","success");
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "deleteZones",method = RequestMethod.GET)
+    @RequiresPermissions("sysIndex")
+    public @ResponseBody Map<String,String> deleteZones(Integer id){
+        Map<String,String> map=new HashMap<>();
+        try {
+            Zones zones=userservice.getZones(id);
+            zones.setZ_name(zones.getZ_name()+"_del");
+            zones.setAvailable(1);
+            userservice.editZones(zones);
+            map.put("state","success");
+
+            return map;
+        }catch (Exception e){
+            return null;
+        }
+    }
+}

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.RoomsMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.Rooms">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="unit_id" jdbcType="INTEGER" property="unit_id" />
+    <result column="floor" jdbcType="INTEGER" property="floor" />
+    <result column="room_num" jdbcType="INTEGER" property="room_num" />
+    <result column="room_name" jdbcType="VARCHAR" property="room_name" />
+    <result column="location" jdbcType="INTEGER" property="location" />
+    <result column="user_code" jdbcType="VARCHAR" property="user_code" />
+    <result column="host_name" jdbcType="VARCHAR" property="host_name" />
+    <result column="contact_info" jdbcType="VARCHAR" property="contact_info" />
+    <result column="room_area" jdbcType="DOUBLE" property="room_area" />
+    <result column="heat_area" jdbcType="DOUBLE" property="heat_area" />
+    <result column="user_type" jdbcType="INTEGER" property="user_type" />
+    <result column="heat_type" jdbcType="INTEGER" property="heat_type" />
+    <result column="is_supply" jdbcType="TINYINT" property="is_supply" />
+    <result column="contract_num" jdbcType="VARCHAR" property="contract_num" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, unit_id, floor, room_num, room_name, location, user_code, host_name, contact_info, 
+    room_area, heat_area, user_type, heat_type, is_supply, contract_num, notes, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rooms
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rooms
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.Rooms">
+    insert into rooms (id, unit_id, floor, 
+      room_num, room_name, location, 
+      user_code, host_name, contact_info, 
+      room_area, heat_area, user_type, 
+      heat_type, is_supply, contract_num, 
+      notes, update_time)
+    values (#{id,jdbcType=INTEGER}, #{unit_id,jdbcType=INTEGER}, #{floor,jdbcType=INTEGER}, 
+      #{room_num,jdbcType=INTEGER}, #{room_name,jdbcType=VARCHAR}, #{location,jdbcType=INTEGER}, 
+      #{user_code,jdbcType=VARCHAR}, #{host_name,jdbcType=VARCHAR}, #{contact_info,jdbcType=VARCHAR}, 
+      #{room_area,jdbcType=DOUBLE}, #{heat_area,jdbcType=DOUBLE}, #{user_type,jdbcType=INTEGER}, 
+      #{heat_type,jdbcType=INTEGER}, #{is_supply,jdbcType=TINYINT}, #{contract_num,jdbcType=VARCHAR}, 
+      #{notes,jdbcType=VARCHAR}, #{update_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="java.util.Map">
+    insert into rooms
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="unit_id != null">
+        unit_id,
+      </if>
+      <if test="floor != null">
+        floor,
+      </if>
+      <if test="room_num != null">
+        room_num,
+      </if>
+      <if test="room_name != null">
+        room_name,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="user_code != null">
+        user_code,
+      </if>
+      <if test="host_name != null">
+        host_name,
+      </if>
+      <if test="contact_info != null">
+        contact_info,
+      </if>
+      <if test="room_area != null">
+        room_area,
+      </if>
+      <if test="heat_area != null">
+        heat_area,
+      </if>
+      <if test="user_type != null">
+        user_type,
+      </if>
+      <if test="heat_type != null">
+        heat_type,
+      </if>
+      <if test="is_supply != null">
+        is_supply,
+      </if>
+      <if test="contract_num != null">
+        contract_num,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+      <if test="special_mark != null">
+     special_mark,
+      </if>
+      <if test="charge_mode != null">
+      charge_mode
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="unit_id != null">
+        #{unit_id,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null">
+        #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="room_num != null">
+        #{room_num,jdbcType=INTEGER},
+      </if>
+      <if test="room_name != null">
+        #{room_name,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=INTEGER},
+      </if>
+      <if test="user_code != null">
+        #{user_code,jdbcType=VARCHAR},
+      </if>
+      <if test="host_name != null">
+        #{host_name,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_info != null">
+        #{contact_info,jdbcType=VARCHAR},
+      </if>
+      <if test="room_area != null">
+        #{room_area,jdbcType=DOUBLE},
+      </if>
+      <if test="heat_area != null">
+        #{heat_area,jdbcType=DOUBLE},
+      </if>
+      <if test="user_type != null">
+        #{user_type,jdbcType=INTEGER},
+      </if>
+      <if test="heat_type != null">
+        #{heat_type,jdbcType=INTEGER},
+      </if>
+      <if test="is_supply != null">
+        #{is_supply,jdbcType=TINYINT},
+      </if>
+      <if test="contract_num != null">
+        #{contract_num,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="special_mark != null">
+        #{special_mark,jdbcType=VARCHAR},
+      </if>
+      <if test="charge_mode != null">
+        #{charge_mode,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.Rooms">
+    update rooms
+    <set>
+      <if test="unit_id != null">
+        unit_id = #{unit_id,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null">
+        floor = #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="room_num != null">
+        room_num = #{room_num,jdbcType=INTEGER},
+      </if>
+      <if test="room_name != null">
+        room_name = #{room_name,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=INTEGER},
+      </if>
+      <if test="user_code != null">
+        user_code = #{user_code,jdbcType=VARCHAR},
+      </if>
+      <if test="host_name != null">
+        host_name = #{host_name,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_info != null">
+        contact_info = #{contact_info,jdbcType=VARCHAR},
+      </if>
+      <if test="room_area != null">
+        room_area = #{room_area,jdbcType=DOUBLE},
+      </if>
+      <if test="heat_area != null">
+        heat_area = #{heat_area,jdbcType=DOUBLE},
+      </if>
+      <if test="user_type != null">
+        user_type = #{user_type,jdbcType=INTEGER},
+      </if>
+      <if test="heat_type != null">
+        heat_type = #{heat_type,jdbcType=INTEGER},
+      </if>
+      <if test="is_supply != null">
+        is_supply = #{is_supply,jdbcType=TINYINT},
+      </if>
+      <if test="contract_num != null">
+        contract_num = #{contract_num,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.Rooms">
+    update rooms
+    set unit_id = #{unit_id,jdbcType=INTEGER},
+      floor = #{floor,jdbcType=INTEGER},
+      room_num = #{room_num,jdbcType=INTEGER},
+      room_name = #{room_name,jdbcType=VARCHAR},
+      location = #{location,jdbcType=INTEGER},
+      user_code = #{user_code,jdbcType=VARCHAR},
+      host_name = #{host_name,jdbcType=VARCHAR},
+      contact_info = #{contact_info,jdbcType=VARCHAR},
+      room_area = #{room_area,jdbcType=DOUBLE},
+      heat_area = #{heat_area,jdbcType=DOUBLE},
+      user_type = #{user_type,jdbcType=INTEGER},
+      heat_type = #{heat_type,jdbcType=INTEGER},
+      is_supply = #{is_supply,jdbcType=TINYINT},
+      contract_num = #{contract_num,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      update_time = #{update_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findByUserType" parameterType="java.lang.Integer" resultType="com.ps.net.model.Rooms">
+    select  * from rooms where user_type=#{user_type}
+  </select>
+
+  <select id="findByHeatType" parameterType="java.lang.Integer" resultType="com.ps.net.model.Rooms">
+    select  * from rooms where heat_type=#{heat_type}
+  </select>
+  <select id="roomLocationExist" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from rooms where location=#{location}
+  </select>
+  <select id="getBuildingRoomsList" parameterType="java.util.Map" resultType="java.util.Map">
+    select nd.*,rl.location as locationName,ct.type_name as custom_typeName,ht.type_name as heat_typeName  from
+    node_list_view nd
+    left join  room_location rl on
+    nd.location=rl.id
+    left  join heat_type ht on
+    nd.heat_type=ht.id
+    left join custom_type ct on
+   nd.user_type=ct.id
+    where 1=1
+    <if test="is_supply != null">
+      and nd.is_supply=#{is_supply}
+    </if>
+    <if test="charge_mode != null ">
+      and nd.charge_mode=#{charge_mode}
+    </if>
+    <if test="build_id != null">
+      and nd.build_id=#{build_id}
+    </if>
+    <if test="zone_id != null">
+      and nd.zone_id=#{zone_id}
+    </if>
+order by nd.id
+    <if test="first!=null and last!=null">
+      limit #{first},#{last}
+    </if>
+  </select>
+  <select id="getBuildingRoomsListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+   select count(*) from(
+    select nd.*,rl.location as locationName,ct.type_name as custom_typeName,ht.type_name as heat_typeName  from
+    node_list_view nd
+    left join  room_location rl on
+    nd.location=rl.id
+    left  join heat_type ht on
+    nd.heat_type=ht.id
+    left join custom_type ct on
+    nd.user_type=ct.id
+    where 1=1
+    <if test="is_supply != null">
+      and nd.is_supply=#{is_supply}
+    </if>
+    <if test="charge_mode != null ">
+      and nd.charge_mode=#{charge_mode}
+    </if>
+    <if test="build_id != null">
+      and nd.build_id=#{build_id}
+    </if>
+    <if test="zone_id != null">
+      and nd.zone_id=#{zone_id}
+    </if>
+    ) as g
+  </select>
+  <select id="getRoomInfo" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select * from node_list_view where id=#{id};
+  </select>
+  <update id="changeRoomInfo" parameterType="java.util.Map">
+    update rooms
+    <set>
+      <if test="unit_id != null">
+        unit_id = #{unit_id,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null">
+        floor = #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="room_num != null">
+        room_num = #{room_num,jdbcType=INTEGER},
+      </if>
+      <if test="room_name != null">
+        room_name = #{room_name,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=INTEGER},
+      </if>
+      <if test="user_code != null">
+        user_code = #{user_code,jdbcType=VARCHAR},
+      </if>
+      <if test="host_name != null">
+        host_name = #{host_name,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_info != null">
+        contact_info = #{contact_info,jdbcType=VARCHAR},
+      </if>
+      <if test="room_area != null">
+        room_area = #{room_area,jdbcType=DOUBLE},
+      </if>
+      <if test="heat_area != null">
+        heat_area = #{heat_area,jdbcType=DOUBLE},
+      </if>
+      <if test="user_type != null">
+        user_type = #{user_type,jdbcType=INTEGER},
+      </if>
+      <if test="heat_type != null">
+        heat_type = #{heat_type,jdbcType=INTEGER},
+      </if>
+      <if test="is_supply != null">
+        is_supply = #{is_supply,jdbcType=TINYINT},
+      </if>
+      <if test="contract_num != null">
+        contract_num = #{contract_num,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="special_mark != null">
+        special_mark=   #{special_mark,jdbcType=VARCHAR},
+      </if>
+      <if test="charge_mode != null">
+        charge_mode=  #{charge_mode,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="checkRoom" resultType="java.util.Map" parameterType="java.util.Map">
+    select * from rooms
+    where 1=1
+    <if test="unit_id!=null">
+      and unit_id=#{unit_id}
+    </if>
+    <if test="room_num!=null">
+      and room_num=#{room_num}
+    </if>
+  </select>
+  <select id="roomsList" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select * from rooms
+    where unit_id=#{unit_id} order  by id
+  </select>
+</mapper>

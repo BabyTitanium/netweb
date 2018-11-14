@@ -1,0 +1,249 @@
+package com.ps.net.controller;
+
+import com.ps.net.changeObject.ExtraMethod;
+import com.ps.net.dao.*;
+import com.ps.net.model.*;
+import com.ps.net.service.RoleService;
+import com.ps.net.service.UserService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping("userSet")
+public class UserController {
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private HeatAreaMapper heatAreaMapper;
+    @Autowired
+    private UsersMapper usersMapper;
+    @Autowired
+    private RolesMapper rolesMapper;
+    @Autowired
+    private ModulesMapper modulesMapper;
+    @Autowired
+    private FunctionsMapper functionsMapper;
+    @Autowired
+    private RoleService roleService;
+    @RequestMapping("userSet")
+    @RequiresPermissions("userSet")
+    public String userSet(){
+        return "user";
+    }
+    @RequestMapping(value = "userList.do")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Map userList(@RequestParam  Map<String,Object> map){
+        try{
+            List<Map<String,Object>> list=userService.userList(map);
+            Integer count=userService.userListCount();
+            for(int i=0;i<list.size();i++){
+                Map<String,Object> user=list.get(i);
+                Integer user_id=Integer.parseInt(String.valueOf(user.get("id")));
+                List<Map<String,Object>> userStations=userService.getUserStations(user_id);
+                if(userStations!=null){
+                    String stationNames=new String();
+                    for(int j=0;j<userStations.size();j++){
+                        Map<String,Object> userStation=userStations.get(j);
+                        String name=String.valueOf(userStation.get("station_name"));
+                        if(j==0)
+                        stationNames+=name;
+                        else
+                            stationNames+=","+name;
+                    }
+                    user.put("stationNames",stationNames.toString());
+                }
+            }
+            return ExtraMethod.returnList(list,count);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "checkUsername")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Map<String,String> checkUsername(String user_name){
+        try{
+            Map<String,String> result=new HashMap<>();
+            Map<String,Object> user=userService.checkUsername(user_name);
+            if(user!=null){
+                result.put("state","erroe");
+            }else{
+                result.put("state","success");
+            }
+            return result;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "addUser",method = RequestMethod.POST)
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Map<String,String> addUser( Users users){
+        try{
+            userService.addUser(users);
+            Map<String,String> result=new HashMap<>();
+            result.put("state","success");
+            return  result;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "areaPermission")
+    @RequiresPermissions("userSet")
+    public String areaPermission(Integer user_id, ModelMap map){
+        map.addAttribute("user_id",user_id);
+        return "areaPermissionTree";
+    }
+    @RequestMapping(value = "getAreaTree")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public List getAreaTree(Integer user_id){
+        try{
+            List<Map<String,Object>> areas=userService.getArealist();
+            if(areas!=null){
+                for(int i=0;i<areas.size();i++){
+                    Map<String,Object> area=areas.get(i);
+                    Integer station_id=Integer.parseInt(String.valueOf(area.get("id")));
+                    Map<String,Object> con=new HashMap<>();
+                    con.put("station_id",station_id);
+                    con.put("user_id",user_id);
+                    Map userstation=userService.haveStation(con);
+                    if(userstation!=null){
+                        area.put("checked","true");
+                    }else{
+                        area.put("checked","false");
+                    }
+                    area.put("pId",0);
+                    area.put("zId",area.get("id"));
+                }
+            }
+            return areas;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "addAreaToUser")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Map addAreaToUser(@RequestParam(value = "user_id") Integer user_id,@RequestParam(value = "list[]") Integer[] list){
+        try{
+            userService.deleteByUser(user_id);
+            if(list.length>0){
+                for(int i=0;i<list.length;i++){
+                    Integer station_id=list[i];
+                    Map<String,Object> con=new HashMap<>();
+                    con.put("station_id",station_id);
+                    con.put("user_id",user_id);
+                    HeatArea heatArea=heatAreaMapper.selectHeatArea(station_id);
+                    con.put("station_name",heatArea.getName());
+                    userService.addUserStation(con);
+                }
+            }
+            Map<String,Object> result=new HashMap<>();
+            result.put("state","success");
+            return result;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "deleteAreaToUser")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Map deleteAreaToUser(@RequestParam(value = "user_id") Integer user_id){
+        try{
+            userService.deleteByUser(user_id);
+            Map<String,Object> result=new HashMap<>();
+            result.put("state","success");
+            return result;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "getUserInfo")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Users getUserInfo(Integer id){
+        try{
+            Users users=usersMapper.selectByPrimaryKey(id);
+            return users;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(value = "editUsers")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Map editUsers(Users users){
+        try{
+            usersMapper.updateByPrimaryKeySelective(users);
+            Map result=new HashMap();
+            result.put("state","success");
+            return result;
+        }catch (Exception e){
+            return  null;
+        }
+    }
+    @RequestMapping(value = "deleteUsers")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Map deleteUsers(Integer id){
+        try{
+            //删除权限
+            usersMapper.deleteByUser(id);
+            //删除此用户
+            usersMapper.deleteByPrimaryKey(id);
+            Map result=new HashMap();
+            result.put("state","success");
+            return result;
+        }catch (Exception e){
+            return  null;
+        }
+    }
+    @RequestMapping("roleList")
+    @RequiresPermissions("userSet")
+    @ResponseBody
+    public Map<String,Object> roleList(@RequestParam Map<String,Object> map){
+        try {
+            List<Map<String,Object>> list=roleService.getRoleList(map);
+            if(list!=null){
+                for(int i=0;i<list.size();i++){
+                    Map role=list.get(i);
+                    Integer id=Integer.parseInt(String.valueOf(role.get("id")));
+                    List<Map<String,Object>> list1=roleService.getRoleService(id);
+                    if(list1!=null){
+                        for(int j=0;j<list1.size();j++){
+                            Map roles=list1.get(j);
+                            role.put(String.valueOf(roles.get("name"))+"_rid",roles.get("rid"));
+                            role.put(String.valueOf(roles.get("name")),"1");
+                        }
+                    }
+                }
+                Integer count=roleService.getRoleListCount();
+                return ExtraMethod.returnList(list,count);
+            }
+            else return null;
+
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+}

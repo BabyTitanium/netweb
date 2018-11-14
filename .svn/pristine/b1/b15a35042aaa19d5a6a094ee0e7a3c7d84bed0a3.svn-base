@@ -1,0 +1,70 @@
+package com.ps.net.service.impl;
+
+import com.ps.net.changeObject.Page;
+import com.ps.net.dao.UsersMapper;
+import com.ps.net.model.Users;
+import com.ps.net.service.UserService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class UserServiceImpl implements UserService {
+    @Resource
+    private UsersMapper usersMapper;
+
+    @Override
+    public List<Map<String, Object>> userList(Map<String,Object> map) {
+        if(map.get("page")!=null&&map.get("limit")!=null) {
+            map=Page.getData(map);
+        }
+        return usersMapper.getUserList(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getUserStations(Integer user_id) {
+        return usersMapper.getUserStations(user_id);
+    }
+
+    @Override
+    public Integer userListCount() {
+        return usersMapper.userListCount();
+    }
+
+    @Override
+    public Map<String, Object> checkUsername(String user_name) {
+        return usersMapper.checkUsername(user_name);
+    }
+
+    @Override
+    public void addUser(Users users) {
+        usersMapper.insertSelective(users);
+    }
+
+    @Override
+    public List<Map<String, Object>> getArealist() {
+        return usersMapper.getArealist();
+    }
+
+    @Override
+    public Map<String, Object> haveStation(Map map) {
+        return usersMapper.haveStation(map);
+    }
+
+    @Override
+    public void deleteByUser(Integer user_id) {
+        usersMapper.deleteByUser(user_id);
+    }
+
+    @Override
+    public void addUserStation(Map map) {
+        usersMapper.addUserStation(map);
+    }
+
+    @Override
+    public Users findUserByName(String user_name) {
+        return usersMapper.findUserByName(user_name);
+    }
+}

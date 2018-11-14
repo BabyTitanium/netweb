@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ps.net.dao.ValveInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ps.net.model.ValveInfo">
+    <id column="valve_addr" jdbcType="CHAR" property="valve_addr" />
+    <result column="net_num" jdbcType="INTEGER" property="net_num" />
+    <result column="coll_num" jdbcType="INTEGER" property="coll_num" />
+    <result column="valve_model" jdbcType="VARCHAR" property="valve_model" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    valve_addr, net_num, coll_num, valve_model, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from valve_info
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from valve_info
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ps.net.model.ValveInfo">
+    insert into valve_info (valve_addr, net_num, coll_num, 
+      valve_model, update_time)
+    values (#{valve_addr,jdbcType=CHAR}, #{net_num,jdbcType=INTEGER}, #{coll_num,jdbcType=INTEGER}, 
+      #{valve_model,jdbcType=VARCHAR}, #{update_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ps.net.model.ValveInfo">
+    insert into valve_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="valve_addr != null">
+        valve_addr,
+      </if>
+      <if test="net_num != null">
+        net_num,
+      </if>
+      <if test="coll_num != null">
+        coll_num,
+      </if>
+      <if test="valve_model != null">
+        valve_model,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="valve_addr != null">
+        #{valve_addr,jdbcType=CHAR},
+      </if>
+      <if test="net_num != null">
+        #{net_num,jdbcType=INTEGER},
+      </if>
+      <if test="coll_num != null">
+        #{coll_num,jdbcType=INTEGER},
+      </if>
+      <if test="valve_model != null">
+        #{valve_model,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ps.net.model.ValveInfo">
+    update valve_info
+    <set>
+      <if test="net_num != null">
+        net_num = #{net_num,jdbcType=INTEGER},
+      </if>
+      <if test="coll_num != null">
+        coll_num = #{coll_num,jdbcType=INTEGER},
+      </if>
+      <if test="valve_model != null">
+        valve_model = #{valve_model,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ps.net.model.ValveInfo">
+    update valve_info
+    set net_num = #{net_num,jdbcType=INTEGER},
+      coll_num = #{coll_num,jdbcType=INTEGER},
+      valve_model = #{valve_model,jdbcType=VARCHAR},
+      update_time = #{update_time,jdbcType=TIMESTAMP}
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </update>
+
+  <update id="updateValveInfo" parameterType="java.util.Map">
+    update valve_info
+    <set>
+      <if test="net_num != null">
+        net_num = #{net_num,jdbcType=INTEGER},
+      </if>
+      <if test="coll_num != null">
+        coll_num = #{coll_num,jdbcType=INTEGER},
+      </if>
+      <if test="valve_model != null">
+        valve_model = #{valve_model,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where valve_addr = #{valve_addr,jdbcType=CHAR}
+  </update>
+
+  <insert id="insertValveInfo" parameterType="java.util.Map">
+    insert into valve_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="valve_addr != null">
+        valve_addr,
+      </if>
+      <if test="net_num != null">
+        net_num,
+      </if>
+      <if test="coll_num != null">
+        coll_num,
+      </if>
+      <if test="valve_model != null">
+        valve_model,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="valve_addr != null">
+        #{valve_addr,jdbcType=CHAR},
+      </if>
+      <if test="net_num != null">
+        #{net_num,jdbcType=INTEGER},
+      </if>
+      <if test="coll_num != null">
+        #{coll_num,jdbcType=INTEGER},
+      </if>
+      <if test="valve_model != null">
+        #{valve_model,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
